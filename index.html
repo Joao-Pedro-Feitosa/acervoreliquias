@@ -151,7 +151,7 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 <label for="ccep" class="hint">CEP para o envio (opcional)</label><input id="ccep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000">
 <div id="cpix" class="hint"></div>
 <a class="btn" id="csend" target="_blank" rel="noopener">Enviar pedido pelo WhatsApp</a>
-<p class="hint">O pedido vai como mensagem. O pagamento e o envio são combinados na conversa.</p>
+<p class="toast" id="cartmsg" role="status" aria-live="polite"></p><p class="hint">O pedido vai como mensagem. O pagamento e o envio são combinados na conversa.</p>
 </div></div>
 
 <div class="modal" id="termos" role="dialog" aria-modal="true" aria-labelledby="tt" hidden><div class="box">
@@ -219,7 +219,19 @@ function mapR(r,i){var f=r.fotos||[];return {i:i,id:r.id,t:r.titulo,e:r.edicao||
 function cond(s){var n=NIV[s];if(!n)return s?'<span>'+esc(s)+'</span>':'';return '<span class="dots" aria-hidden="true">'+"●".repeat(n)+'<i>'+"●".repeat(5-n)+'</i></span><span>Estado: '+esc(s)+'</span>'}
 var POS={completo:"Pôster completo",destacado:"Pôster destacado (retirado)",ausente:"Sem pôster nesta edição"},LOM={firme:"Lombada firme",fraca:"Lombada com cola ressecada ou solta"};
 function info(r){return [r.tp,POS[r.po],LOM[r.lo],r.ob].filter(Boolean).map(esc).join(" · ")}
-function reservar(ids){try{return fetch(SB+"/rest/v1/rpc/reservar_revistas",{method:"POST",headers:hdr(1),body:JSON.stringify({ids:ids.map(String)}),keepalive:true}).catch(function(){})}catch(e){}}
+async function reservar(ids){
+  if(!ids.length)return {ok:true};
+  try{
+    var r=await fetch(SB+"/rest/v1/rpc/reservar_revistas",{method:"POST",headers:hdr(1),body:JSON.stringify({ids:ids.map(String)})});
+    if(!r.ok)return {ok:false,message:"Não foi possível solicitar a reserva. Atualize a página e tente novamente."};
+    var params=new URLSearchParams({select:"id,status",id:"in.("+ids.map(String).join(",")+")"});
+    var check=await fetch(SB+"/rest/v1/revistas?"+params.toString(),{headers:hdr()});
+    if(!check.ok)return {ok:false,message:"Não foi possível confirmar a situação dos exemplares. Tente novamente."};
+    var rows=await check.json(),confirmed=ids.every(function(id){var item=rows.filter(function(x){return x.id===id})[0];return item&&item.status==="reservada"});
+    if(!confirmed)return {ok:false,message:"Um ou mais exemplares não estão mais disponíveis. Atualize o catálogo antes de continuar."};
+    return {ok:true};
+  }catch(e){return {ok:false,message:"Falha de conexão ao solicitar a reserva. Verifique sua internet e tente novamente."}}
+}
 function ld(){try{var s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify({"@context":"https://schema.org","@type":"ItemList",itemListElement:REVISTAS.filter(function(r){return r.st==='disponivel'}).map(function(r,j){return {"@type":"ListItem",position:j+1,item:{"@type":"Product",name:r.t+" "+r.e+" "+r.a,image:r.img,url:location.origin+"/?r="+r.id,offers:{"@type":"Offer",priceCurrency:"BRL",price:r.p,availability:"https://schema.org/InStock",itemCondition:"https://schema.org/UsedCondition"}}}})});document.head.appendChild(s)}catch(e){}}
 function byId(id){return REVISTAS.filter(function(r){return r.id===id})[0]}
 
@@ -245,7 +257,20 @@ $('cb').onclick=function(){drawCart();$('cart').hidden=false;document.body.style
 $('cx').onclick=function(){$('cart').hidden=true;document.body.style.overflow=''};
 $('cl').onclick=function(e){var b=e.target.closest('[data-rm]');if(b){CART=CART.filter(function(x){return x!==b.dataset.rm});saveCart();drawCart();draw()}};
 $('cnome').oninput=$('ccep').oninput=drawCart;
-$('csend').onclick=function(){var its=itens();its.forEach(function(r){track(r.id,'whatsapp')});reservar(its.map(function(r){return r.id}))};
+$('csend').onclick=async function(e){
+  e.preventDefault();
+  var its=itens(),ids=its.map(function(r){return r.id}),a=this;
+  if(!ids.length)return;
+  a.style.pointerEvents="none";a.textContent="Confirmando disponibilidade…";
+  var result=await reservar(ids);
+  a.style.pointerEvents="";
+  if(!result.ok){a.textContent="Tentar novamente pelo WhatsApp";$('cartmsg').textContent=result.message;return}
+  its.forEach(function(r){track(r.id,'whatsapp')});
+  $('cartmsg').textContent="Exemplares reservados por até 6 horas. Abrindo o WhatsApp…";
+  var sub=its.reduce(function(v,r){return v+r.p},0),fr=frete(sub);
+  var msg="Olá! Quero comprar:\n"+its.map(function(r){return "- "+r.t+" "+r.e+" ("+r.a+"): "+money(r.p)}).join("\n")+"\nSubtotal: "+money(sub)+"\nFrete: "+(fr==null?"a combinar":fr===0?"grátis":money(fr))+(($('cnome').value)?"\nNome: "+$('cnome').value:"")+(($('ccep').value)?"\nCEP: "+$('ccep').value:"");
+  location.href=wa(WHATSAPP)+"?text="+encodeURIComponent(msg);
+};
 $('cpix').onclick=function(e){if(e.target.id==='pkc'){try{navigator.clipboard.writeText(CFG.pix);e.target.textContent='Copiado'}catch(x){}}};
 
 /* catálogo */
@@ -322,7 +347,14 @@ function openM(i,btn){
 }
 function closeM(){modal.hidden=true;document.body.style.overflow='';if(lastBtn)lastBtn.focus();try{history.replaceState(null,'',location.pathname)}catch(e){}}
 $('madd').onclick=function(){if(CART.indexOf(cur.id)>-1){closeM();$('cb').click();return}addCart(cur);this.textContent='Adicionado. Ver carrinho'};
-$('mw').onclick=function(){track(cur.id,'whatsapp');reservar([cur.id])};$('mav').onclick=function(){closeM();$('pt').value='Quero ser avisado se aparecer: '+cur.t+' '+cur.e+(cur.a?' ('+cur.a+')':'');$('procura').scrollIntoView({behavior:'smooth'});$('pn').focus()};
+$('mw').onclick=async function(e){
+  e.preventDefault();
+  var a=this;a.style.pointerEvents="none";$('mt2').textContent="Confirmando disponibilidade…";
+  var result=await reservar([cur.id]);a.style.pointerEvents="";
+  if(!result.ok){$('mt2').textContent=result.message;return}
+  track(cur.id,'whatsapp');$('mt2').textContent="Exemplar reservado por até 6 horas. Abrindo o WhatsApp…";
+  location.href=a.href;
+};$('mav').onclick=function(){closeM();$('pt').value='Quero ser avisado se aparecer: '+cur.t+' '+cur.e+(cur.a?' ('+cur.a+')':'');$('procura').scrollIntoView({behavior:'smooth'});$('pn').focus()};
 $('mcp').onclick=function(){var u=location.origin+location.pathname+'?r='+cur.id;try{navigator.clipboard.writeText(u);$('mt2').textContent='Link copiado.'}catch(e){$('mt2').textContent=u}};
 grid.addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(b)openM(+b.dataset.i,b)});
 thumbs.addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(b){k=+b.dataset.k;show()}});
