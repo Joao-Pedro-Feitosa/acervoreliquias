@@ -239,7 +239,7 @@ function byId(id){return REVISTAS.filter(function(r){return r.id===id})[0]}
 try{CART=JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){}
 function saveCart(){try{localStorage.setItem('cart',JSON.stringify(CART))}catch(e){}$('cn').textContent=itens().length}
 function itens(){return CART.map(byId).filter(function(r){return r&&r.st==='disponivel'})}
-function addCart(r){if(CART.indexOf(r.id)<0){CART.push(r.id);track(r.id,'carrinho')}saveCart()}
+function addCart(r){if(CART.indexOf(r.id)<0){if(CART.length>=8)return false;CART.push(r.id);track(r.id,'carrinho')}saveCart();return true}
 function frete(sub){
   var f=CFG.frete_fixo,g=CFG.frete_gratis_acima;
   if(f==null)return null;f=Number(f);if(g!=null&&sub>=Number(g))return 0;return f;
@@ -346,7 +346,7 @@ function openM(i,btn){
   try{history.replaceState(null,'','?r='+cur.id)}catch(e){}
 }
 function closeM(){modal.hidden=true;document.body.style.overflow='';if(lastBtn)lastBtn.focus();try{history.replaceState(null,'',location.pathname)}catch(e){}}
-$('madd').onclick=function(){if(CART.indexOf(cur.id)>-1){closeM();$('cb').click();return}addCart(cur);this.textContent='Adicionado. Ver carrinho'};
+$('madd').onclick=function(){if(CART.indexOf(cur.id)>-1){closeM();$('cb').click();return}if(!addCart(cur)){$('mt2').textContent='O carrinho aceita no máximo 8 exemplares por pedido.';return}this.textContent='Adicionado. Ver carrinho'};
 $('mw').onclick=async function(e){
   e.preventDefault();
   var a=this;a.style.pointerEvents="none";$('mt2').textContent="Confirmando disponibilidade…";
