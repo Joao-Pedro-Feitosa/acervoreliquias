@@ -220,10 +220,10 @@ function cond(s){var n=NIV[s];if(!n)return s?'<span>'+esc(s)+'</span>':'';return
 var POS={completo:"Pôster completo",destacado:"Pôster destacado (retirado)",ausente:"Sem pôster nesta edição"},LOM={firme:"Lombada firme",fraca:"Lombada com cola ressecada ou solta"};
 function info(r){return [r.tp,POS[r.po],LOM[r.lo],r.ob].filter(Boolean).map(esc).join(" · ")}
 async function reservar(ids){
-  if(!ids.length)return {ok:true};
   try{
     var r=await fetch(SB+"/rest/v1/rpc/reservar_revistas",{method:"POST",headers:hdr(1),body:JSON.stringify({ids:ids.map(String)})});
     if(!r.ok)return {ok:false,message:"Não foi possível solicitar a reserva. Atualize a página e tente novamente."};
+    if(!ids.length)return {ok:true};
     var params=new URLSearchParams({select:"id,status",id:"in.("+ids.map(String).join(",")+")"});
     var check=await fetch(SB+"/rest/v1/revistas?"+params.toString(),{headers:hdr()});
     if(!check.ok)return {ok:false,message:"Não foi possível confirmar a situação dos exemplares. Tente novamente."};
