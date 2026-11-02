@@ -281,7 +281,7 @@ function draw(){
 function load(){reservar([]);
   count.textContent="Carregando…";grid.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>';
   Promise.all([api("revistas?select=*&order=destaque.desc,criado_em.desc"),api("config?select=*&id=eq.1")]).then(function(x){
-    REVISTAS=x[0].map(mapR);CFG=x[1][0]||{};WHATSAPP=CFG.whatsapp||"";
+    REVISTAS=x[0].map(mapR).filter(function(r){return r.st!=="rascunho"});REVISTAS.forEach(function(r,i){r.i=i});CFG=x[1][0]||{};WHATSAPP=CFG.whatsapp||"";
     if(CFG.nome){document.title=CFG.nome;$('nome').textContent=CFG.nome}
     $('wa').href=$('wa2').href=wa(WHATSAPP);
     $('ig').href=$('ig2').href="https://www.instagram.com/"+(CFG.instagram||"oacervo.reliquias")+"/";
