@@ -209,7 +209,7 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 <form class="pform" id="pf">
 <input id="pn" placeholder="Seu nome" maxlength="80" required aria-label="Seu nome">
 <input id="pc" placeholder="WhatsApp ou e-mail" maxlength="120" required aria-label="Seu contato">
-<textarea id="pt" rows="3" placeholder="Ex.: Playboy de dezembro de 2000, com a capa da…" maxlength="500" required aria-label="O que você procura"></textarea>
+<textarea id="pt" rows="3" placeholder="Ex.: Playboy de dezembro de 2000, com a capa da…" minlength="3" maxlength="500" required aria-label="O que você procura"></textarea>
 <input class="hp" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 <button class="btn" type="submit" style="justify-self:start">Enviar pedido de procura</button>
 <p class="toast" id="pm" role="status"></p>
@@ -396,6 +396,13 @@ $('pf').onsubmit=async function(e){
   if($('hp').value)return;
   var msg=$('pm'),btn=this.querySelector('button[type="submit"]');
   if(btn.disabled)return;
+  var texto=$('pt').value.trim();
+  $('pt').value=texto;
+  if(texto.length<3||texto.length>500){
+    msg.textContent='Descreva a edição que procura com pelo menos 3 e no máximo 500 caracteres.';
+    $('pt').focus();
+    return;
+  }
   btn.disabled=true;msg.textContent='Enviando…';
   try{
     var response=await fetch(SB+"/rest/v1/procuras",{
@@ -404,7 +411,7 @@ $('pf').onsubmit=async function(e){
       body:JSON.stringify({
         nome:$('pn').value.trim(),
         contato:$('pc').value.trim(),
-        texto:$('pt').value.trim()
+        texto:texto
       })
     });
     if(!response.ok){
