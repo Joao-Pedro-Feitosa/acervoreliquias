@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>O Acervo Relíquias – Vitrine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,700;6..96,900&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#17110C;--ink:#F1E6D6;--mut:#A8977F;--line:#3A2C1F;--card:#241B12;--tag:#F2A33A;--tagink:#1A120A;--red:#E8793A;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+:root[data-theme="light"]{color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+header{padding:36px 0 22px;border-bottom:3px solid var(--ink)}
+h1{font-family:'Bodoni Moda',Georgia,serif;font-weight:900;font-size:clamp(2.6rem,9vw,5.5rem);line-height:.95;margin:0;letter-spacing:-.02em}
+.sub{margin:10px 0 0;color:var(--mut);max-width:52ch}
+.tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:18px 0}
+input[type=search]{flex:1 1 220px;padding:11px 14px;border:2px solid var(--ink);background:var(--card);color:var(--ink);font:inherit;border-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--ink);background:transparent;color:var(--ink);padding:6px 14px;font:600 .9rem Figtree,sans-serif;border-radius:99px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.count{color:var(--mut);font-size:.9rem;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:26px 20px;padding-bottom:50px}
+.item{display:flex;flex-direction:column}
+.cover{position:relative;aspect-ratio:3/4;border-radius:2px;padding:14px 12px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;box-shadow:4px 4px 0 var(--line);overflow:hidden}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover .mast{font-family:'Bodoni Moda',serif;font-weight:900;font-size:1.55rem;line-height:1;word-break:break-word}
+.cover .ed{font-size:.8rem;font-weight:600;opacity:.9}
+.price{position:absolute;right:-6px;top:-6px;background:var(--tag);color:var(--tagink);font-weight:600;padding:8px 10px;border-radius:50%;width:66px;height:66px;display:grid;place-items:center;text-align:center;font-size:.95rem;transform:rotate(8deg);line-height:1.1}
+.info{padding:14px 2px 0;display:flex;flex-direction:column;gap:3px;flex:1}
+.info h2{font-size:1.02rem;margin:0}
+.meta{color:var(--mut);font-size:.88rem}
+.estado{font-size:.82rem;color:var(--red);font-weight:600}
+.btn{margin-top:10px;display:inline-block;text-align:center;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600;padding:9px 12px;border-radius:4px}
+.item.off .cover{filter:grayscale(1);opacity:.55}
+.btn[disabled]{opacity:.5;cursor:default}
+.empty{padding:40px 0;color:var(--mut)}
+.gate{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px;text-align:center}
+.gate[hidden]{display:none}
+.gate h2{font-family:'Bodoni Moda',serif;font-size:2.4rem;margin:0 0 8px}
+.gate p{color:var(--mut);max-width:42ch;margin:0 auto 20px}
+.gate .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.gate .btn{border:0;font:600 1rem Figtree,sans-serif;cursor:pointer;margin:0}
+.gate .alt{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.item .btn,.modal .btn{border:0;font:600 1rem Figtree,sans-serif;cursor:pointer}
+.modal{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.82);overflow:auto;padding:20px}
+.modal[hidden]{display:none}
+.box{position:relative;max-width:520px;margin:0 auto;background:var(--card);border:2px solid var(--line);padding:16px;border-radius:4px}
+.x{position:absolute;right:10px;top:8px;z-index:2;background:var(--bg);color:var(--ink);border:2px solid var(--line);width:38px;height:38px;border-radius:50%;font-size:1.3rem;cursor:pointer}
+.stage{position:relative;aspect-ratio:3/4;max-height:68vh;margin:0 auto;display:grid;place-items:center;overflow:hidden;border-radius:2px;color:#fff;text-align:center;padding:16px}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.nav{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0}
+.nav button{background:var(--ink);color:var(--bg);border:0;width:40px;height:40px;border-radius:50%;font-size:1.4rem;cursor:pointer}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.thumbs button{flex:0 0 56px;height:72px;padding:0;border:2px solid var(--line);background:#000;cursor:pointer;border-radius:2px;opacity:.6}
+.thumbs button[aria-current=true]{border-color:var(--tag);opacity:1}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.box h2{font-family:'Bodoni Moda',serif;font-size:1.6rem;margin:14px 0 2px}
+.mp{font-size:1.5rem;font-weight:600;margin:6px 0 0}
+.box .btn{display:block;width:100%;margin-top:14px;padding:13px}
+footer{border-top:3px solid var(--ink);padding:24px 0 40px;color:var(--mut);font-size:.92rem}
+</style>
+</head>
+<body>
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gt" hidden>
+<div><h2 id="gt">Conteúdo para maiores de 18 anos</h2>
+<p>Esta loja vende revistas adultas. Confirme que você tem 18 anos ou mais para entrar.</p>
+<div class="row"><button class="btn" id="yes">Tenho 18 anos ou mais</button><button class="btn alt" id="no">Sair</button></div></div></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt" hidden>
+<div class="box">
+<button class="x" id="mx" aria-label="Fechar">×</button>
+<div class="stage" id="stage"></div>
+<div class="nav" id="nav"><button id="prev" aria-label="Foto anterior">‹</button><span id="pos"></span><button id="next" aria-label="Próxima foto">›</button></div>
+<div class="thumbs" id="thumbs"></div>
+<h2 id="mt"></h2><span class="meta" id="mm"></span><br><span class="estado" id="ms"></span>
+<p class="mp" id="mp"></p>
+<a class="btn" id="mw" target="_blank" rel="noopener">Falar no WhatsApp</a>
+</div></div>
+<header><div class="wrap">
+<h1>O Acervo Relíquias</h1>
+<p class="sub">Edições de Playboy e Sexy para colecionadores, de números recentes a raridades. Achou a sua? Chame no WhatsApp.</p>
+</div></header>
+
+<main class="wrap">
+<div class="tools">
+<input type="search" id="q" placeholder="Buscar por revista, edição, ano ou capa" aria-label="Buscar revistas">
+</div>
+<div class="chips" id="chips" role="group" aria-label="Categorias"></div>
+<p class="count" id="count" style="margin-top:16px"></p>
+<div class="grid" id="grid"></div>
+</main>
+
+<footer><div class="wrap">
+Atendimento por WhatsApp e Instagram <a href="https://www.instagram.com/oacervo.reliquias/" target="_blank" rel="noopener" style="color:var(--ink)">@oacervo.reliquias</a>. Envio para todo o Brasil.<br>
+<span id="end"></span>
+</div></footer>
+
+<script>
+var SB="https://bbxjmgsspiwhwpppmlus.supabase.co", KEY="sb_publishable_9IIaStSDOL4TxDsvmf2WrA_wft5Uzrl";
+var WHATSAPP="", REVISTAS=[];
+function api(p){return fetch(SB+"/rest/v1/"+p,{headers:{apikey:KEY}}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+function money(p){return "R$ "+(p%1?p.toFixed(2).replace(".",","):p)}
+function mapR(r){var f=r.fotos||[];return {t:r.titulo,e:r.edicao||"",a:r.ano||"",c:r.categoria,m:r.capa_nome||"",s:r.estado||"",p:Number(r.preco),fotos:f,img:f[0],st:r.status,cor:r.categoria==="Sexy"?"#9F1239":"#1F2937"}}
+function load(){
+  count.textContent="Carregando…";
+  Promise.all([api("revistas?select=*&order=destaque.desc,criado_em.desc"),api("config?select=*&id=eq.1")]).then(function(x){
+    REVISTAS=x[0].map(mapR);var c=x[1][0]||{};
+    WHATSAPP=c.whatsapp||"";
+    if(c.nome){document.title=c.nome+" – Vitrine";document.querySelector("h1").textContent=c.nome}
+    document.getElementById("end").textContent=c.endereco||"";
+    drawChips();draw();
+  }).catch(function(){count.textContent="";grid.innerHTML='<p class="empty">Não foi possível carregar o catálogo agora. Tente novamente em instantes.</p>'});
+}
+
+var cat="Todas", grid=document.getElementById('grid'), q=document.getElementById('q'),
+    chips=document.getElementById('chips'), count=document.getElementById('count');
+
+function cats(){return ["Todas"].concat(REVISTAS.map(function(r){return r.c}).filter(function(v,i,a){return a.indexOf(v)===i}).sort())}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+function drawChips(){
+  chips.innerHTML="";
+  cats().forEach(function(c){
+    var b=document.createElement('button');b.className='chip';b.textContent=c;
+    b.setAttribute('aria-pressed',c===cat);
+    b.onclick=function(){cat=c;drawChips();draw()};
+    chips.appendChild(b);
+  });
+}
+
+function draw(){
+  var t=q.value.trim().toLowerCase();
+  var lista=REVISTAS.filter(function(r){
+    var txt=(r.t+" "+r.e+" "+r.a+" "+(r.m||"")).toLowerCase();
+    return (cat==="Todas"||r.c===cat)&&txt.indexOf(t)>-1;
+  });
+  count.textContent=lista.length+(lista.length===1?" revista disponível":" revistas disponíveis");
+  if(!lista.length){grid.innerHTML='<p class="empty">Nenhuma revista encontrada. Tente outra busca ou categoria.</p>';return}
+  grid.innerHTML=lista.map(function(r){
+    var msg=encodeURIComponent("Olá! Tenho interesse na revista "+r.t+" "+r.e+" ("+r.a+"). Ainda está disponível?");
+    return '<article class="item'+(r.st!=='disponivel'?' off':'')+'"><div class="cover" style="background:'+r.cor+'">'+
+      '<div class="price">'+money(r.p)+'</div>'+(r.img?'<img src="'+esc(r.img)+'" alt="Capa da '+esc(r.t)+' '+esc(r.e)+'">':'<div class="mast">'+esc(r.t)+'</div><div class="ed">'+esc(r.e)+' · '+r.a+'</div>')+'</div>'+
+      '<div class="info"><h2>'+esc(r.t)+' '+esc(r.e)+'</h2><span class="meta">'+r.a+(r.m?' · Capa: '+esc(r.m):'')+'</span>'+
+      '<span class="estado">Estado: '+esc(r.s)+'</span>'+
+      (r.st==='disponivel'?'<button class="btn" data-i="'+REVISTAS.indexOf(r)+'">Comprar</button>':'<button class="btn" disabled>'+(r.st==='vendida'?'Vendida':'Reservada')+'</button>')+'</div></article>';
+  }).join("");
+}
+var gate=document.getElementById('gate'),ok=false;
+try{ok=sessionStorage.getItem('maior18')==='1'}catch(e){}
+gate.hidden=ok;
+document.getElementById('yes').onclick=function(){gate.hidden=true;try{sessionStorage.setItem('maior18','1')}catch(e){}};
+document.getElementById('no').onclick=function(){location.href='https://www.google.com'};
+var modal=document.getElementById('modal'),stage=document.getElementById('stage'),thumbs=document.getElementById('thumbs'),
+    nav=document.getElementById('nav'),pos=document.getElementById('pos'),cur=null,fotos=[],k=0,lastBtn=null;
+function show(){
+  if(!fotos.length){
+    stage.style.background=cur.cor;
+    stage.innerHTML='<div><div style="font:900 2rem \'Bodoni Moda\',serif">'+esc(cur.t)+'</div><p>'+esc(cur.e)+' · '+cur.a+'<br>Fotos do estado em breve. Peça mais fotos pelo WhatsApp.</p></div>';
+    return;
+  }
+  stage.style.background='#000';
+  stage.innerHTML='<img src="'+esc(fotos[k])+'" alt="Foto '+(k+1)+' de '+fotos.length+' da '+esc(cur.t)+' '+esc(cur.e)+'">';
+  pos.textContent=(k+1)+' / '+fotos.length;
+  Array.prototype.forEach.call(thumbs.children,function(b,j){b.setAttribute('aria-current',j===k)});
+}
+function go(d){if(fotos.length>1){k=(k+d+fotos.length)%fotos.length;show()}}
+function openM(i,btn){
+  cur=REVISTAS[i];lastBtn=btn;k=0;
+  fotos=cur.fotos&&cur.fotos.length?cur.fotos:(cur.img?[cur.img]:[]);
+  nav.hidden=thumbs.hidden=fotos.length<2;
+  thumbs.innerHTML=fotos.map(function(f,j){return '<button data-k="'+j+'" aria-label="Ver foto '+(j+1)+'"><img src="'+esc(f)+'" alt=""></button>'}).join("");
+  document.getElementById('mt').textContent=cur.t+' '+cur.e;
+  document.getElementById('mm').textContent=cur.a+(cur.m?' · Capa: '+cur.m:'');
+  document.getElementById('ms').textContent='Estado: '+cur.s;
+  document.getElementById('mp').textContent=money(cur.p);
+  document.getElementById('mw').href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent('Olá! Quero comprar a revista '+cur.t+' '+cur.e+' ('+cur.a+'). Ainda está disponível?');
+  show();modal.hidden=false;document.body.style.overflow='hidden';
+  document.getElementById('mx').focus();
+}
+function closeM(){modal.hidden=true;document.body.style.overflow='';if(lastBtn)lastBtn.focus()}
+grid.addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(b)openM(+b.dataset.i,b)});
+thumbs.addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(b){k=+b.dataset.k;show()}});
+document.getElementById('prev').onclick=function(){go(-1)};
+document.getElementById('next').onclick=function(){go(1)};
+document.getElementById('mx').onclick=closeM;
+modal.addEventListener('click',function(e){if(e.target===modal)closeM()});
+document.addEventListener('keydown',function(e){if(modal.hidden)return;if(e.key==='Escape')closeM();if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
+q.addEventListener('input',draw);
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Painel – O Acervo Relíquias</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{color-scheme:dark;--bg:#17110C;--ink:#F1E6D6;--mut:#A8977F;--line:#3A2C1F;--card:#241B12;--tag:#F2A33A;--tagink:#1A120A;--red:#E8793A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:0}
+h2{font-size:1.15rem;margin:0 0 12px}
+[hidden]{display:none!important}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:2px solid var(--line);margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:12px}
+label{display:block;font-size:.88rem;color:var(--mut);margin:10px 0 3px}
+input,select{width:100%;padding:10px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;font:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{font:600 .95rem system-ui,sans-serif;padding:10px 14px;border-radius:4px;border:0;cursor:pointer;background:var(--tag);color:var(--tagink)}
+button.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button.del{background:transparent;color:var(--red);border:1px solid var(--red)}
+button:disabled{opacity:.5}
+:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tabs button{flex:1}
+.tabs button[aria-pressed=false]{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.item{display:flex;gap:12px;align-items:center}
+.item img,.item .ph{width:54px;height:72px;object-fit:cover;border-radius:2px;background:#000;flex:none}
+.item .ph{display:grid;place-items:center;font-size:.7rem;color:var(--mut)}
+.item .t{flex:1;min-width:0}
+.item .t b{display:block}
+.item .t span{color:var(--mut);font-size:.88rem}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.acts select{width:auto;padding:7px}
+.fotos{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.foto{width:84px;text-align:center;font-size:.75rem}
+.foto img{width:84px;height:112px;object-fit:cover;border-radius:2px;display:block}
+.foto div{display:flex;justify-content:space-between}
+.foto button{padding:2px 7px;font-size:.85rem}
+.msg{color:var(--tag);min-height:1.4em;margin:8px 0 0;font-size:.92rem}
+.err{color:var(--red)}
+.chk{display:flex;gap:8px;align-items:center;margin-top:12px;color:var(--ink)}
+.chk input{width:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="login" hidden>
+<div class="top"><h1>Painel do Acervo</h1></div>
+<form class="card" id="lf">
+<h2>Entrar</h2>
+<label for="em">E-mail</label><input id="em" type="email" autocomplete="username" required>
+<label for="pw">Senha (mínimo 8 caracteres)</label><input id="pw" type="password" autocomplete="current-password" minlength="8" required>
+<div class="acts"><button type="submit">Entrar</button><button type="button" class="alt" id="su">Criar conta (primeiro acesso)</button></div>
+<p class="msg" id="lm"></p>
+</form>
+</section>
+
+<section id="denied" hidden>
+<div class="top"><h1>Acesso negado</h1><button class="alt" id="out2">Sair</button></div>
+<div class="card">Esta conta não é a administradora do site.</div>
+</section>
+
+<section id="app" hidden>
+<div class="top"><h1>Painel do Acervo</h1><div class="acts" style="margin:0"><a href="index.html" style="color:var(--ink)">Ver vitrine</a><button class="alt" id="out">Sair</button></div></div>
+<div class="tabs" role="group" aria-label="Seções">
+<button id="t1" aria-pressed="true">Revistas</button><button id="t2" aria-pressed="false">Nova revista</button><button id="t3" aria-pressed="false">Loja</button>
+</div>
+
+<div id="p1"><p class="msg" id="count"></p><div id="list"></div></div>
+
+<form id="p2" class="card" hidden>
+<h2 id="ft">Nova revista</h2>
+<div class="row">
+<div><label for="f_cat">Revista</label><select id="f_cat"><option>Playboy</option><option>Sexy</option></select></div>
+<div><label for="f_ed">Edição</label><input id="f_ed" placeholder="nº 215"></div>
+</div>
+<div class="row">
+<div><label for="f_ano">Ano</label><input id="f_ano" type="number" min="1950" max="2100"></div>
+<div><label for="f_preco">Preço (R$)</label><input id="f_preco" type="number" step="0.01" min="0" required></div>
+</div>
+<label for="f_capa">Quem está na capa</label><input id="f_capa">
+<div class="row">
+<div><label for="f_est">Estado de conservação</label><select id="f_est"><option>Ótimo</option><option>Muito bom</option><option selected>Bom</option><option>Regular</option><option>Com defeitos</option></select></div>
+<div><label for="f_st">Situação</label><select id="f_st"><option value="disponivel">Disponível</option><option value="reservada">Reservada</option><option value="vendida">Vendida</option></select></div>
+</div>
+<label class="chk"><input type="checkbox" id="f_dest"> Destaque (aparece primeiro)</label>
+<label for="f_files">Fotos (a primeira é a capa; use as outras para mostrar o estado)</label>
+<input id="f_files" type="file" accept="image/*" multiple>
+<div class="fotos" id="fotos"></div>
+<div class="acts"><button type="submit" id="save">Salvar revista</button><button type="button" class="alt" id="cancel">Cancelar</button></div>
+<p class="msg" id="fm"></p>
+</form>
+
+<form id="p3" class="card" hidden>
+<h2>Dados da loja</h2>
+<label for="c_nome">Nome da loja</label><input id="c_nome" required>
+<label for="c_wa">WhatsApp (com DDD, só números. Ex.: 62999999999)</label><input id="c_wa" inputmode="numeric" required>
+<label for="c_end">Endereço / horário (opcional)</label><input id="c_end">
+<div class="acts"><button type="submit">Salvar</button></div>
+<p class="msg" id="cm"></p>
+</form>
+</section>
+</div>
+
+<script>
+var SB="https://bbxjmgsspiwhwpppmlus.supabase.co", KEY="sb_publishable_9IIaStSDOL4TxDsvmf2WrA_wft5Uzrl";
+var sb=supabase.createClient(SB,KEY), $=function(i){return document.getElementById(i)};
+var list=[], editId=null, fotos=[];
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function money(p){p=Number(p);return "R$ "+(p%1?p.toFixed(2).replace(".",","):p)}
+function view(n){["login","denied","app"].forEach(function(x){$(x).hidden=x!==n})}
+function say(id,t,bad){var e=$(id);e.textContent=t||"";e.className="msg"+(bad?" err":"")}
+
+async function boot(){
+  var s=(await sb.auth.getSession()).data.session;
+  if(!s){view("login");return}
+  var r=await sb.rpc("claim_admin");
+  if(r.error||!r.data){view("denied");return}
+  view("app");await loadList();await loadCfg();
+}
+$("lf").onsubmit=async function(e){
+  e.preventDefault();say("lm","Entrando…");
+  var r=await sb.auth.signInWithPassword({email:$("em").value.trim(),password:$("pw").value});
+  if(r.error){say("lm","E-mail ou senha incorretos.",1);return}
+  say("lm","");boot();
+};
+$("su").onclick=async function(){
+  var em=$("em").value.trim(),pw=$("pw").value;
+  if(!em||pw.length<8){say("lm","Preencha e-mail e uma senha com 8 caracteres ou mais.",1);return}
+  var r=await sb.auth.signUp({email:em,password:pw});
+  if(r.error){say("lm","Não foi possível criar a conta: "+r.error.message,1);return}
+  say("lm",r.data.session?"Conta criada.":"Conta criada. Abra o e-mail de confirmação e depois entre aqui.");
+  if(r.data.session)boot();
+};
+async function logout(){await sb.auth.signOut();view("login")}
+$("out").onclick=$("out2").onclick=logout;
+
+function tab(n){
+  [1,2,3].forEach(function(i){$("p"+i).hidden=i!==n;$("t"+i).setAttribute("aria-pressed",i===n)});
+}
+$("t1").onclick=function(){tab(1)};
+$("t2").onclick=function(){newForm();tab(2)};
+$("t3").onclick=function(){tab(3)};
+
+async function loadList(){
+  var r=await sb.from("revistas").select("*").order("criado_em",{ascending:false});
+  if(r.error){say("count","Erro ao carregar: "+r.error.message,1);return}
+  list=r.data;say("count",list.length+(list.length===1?" revista":" revistas")+" cadastradas");
+  $("list").innerHTML=list.map(function(m,i){
+    var f=(m.fotos||[])[0];
+    return '<div class="card item">'+(f?'<img src="'+esc(f)+'" alt="">':'<div class="ph">sem foto</div>')+
+    '<div class="t"><b>'+esc(m.titulo)+' '+esc(m.edicao)+(m.destaque?' ★':'')+'</b><span>'+esc(m.ano)+' · '+esc(m.estado)+' · '+money(m.preco)+' · '+(m.fotos||[]).length+' foto(s)</span>'+
+    '<div class="acts"><select data-st="'+m.id+'" aria-label="Situação">'+
+    ["disponivel","reservada","vendida"].map(function(x){return '<option value="'+x+'"'+(m.status===x?' selected':'')+'>'+{disponivel:"Disponível",reservada:"Reservada",vendida:"Vendida"}[x]+'</option>'}).join("")+
+    '</select><button class="alt" data-ed="'+i+'">Editar</button><button class="del" data-rm="'+i+'">Excluir</button></div></div></div>';
+  }).join("");
+}
+$("list").addEventListener("change",async function(e){
+  var id=e.target.dataset.st;if(!id)return;
+  var r=await sb.from("revistas").update({status:e.target.value}).eq("id",id);
+  if(r.error)say("count","Erro ao salvar: "+r.error.message,1);else say("count","Situação atualizada.");
+});
+$("list").addEventListener("click",async function(e){
+  var b=e.target.closest("button");if(!b)return;
+  if(b.dataset.ed!==undefined){fill(list[+b.dataset.ed]);tab(2)}
+  if(b.dataset.rm!==undefined){
+    var m=list[+b.dataset.rm];
+    if(!confirm("Excluir "+m.titulo+" "+(m.edicao||"")+" e suas fotos? Isso não pode ser desfeito."))return;
+    var paths=(m.fotos||[]).map(pathOf).filter(Boolean);
+    var r=await sb.from("revistas").delete().eq("id",m.id);
+    if(r.error){say("count","Erro ao excluir: "+r.error.message,1);return}
+    if(paths.length)await sb.storage.from("revistas").remove(paths);
+    loadList();
+  }
+});
+function pathOf(u){var i=u.indexOf("/revistas/");return i<0?null:decodeURIComponent(u.slice(i+10))}
+
+function newForm(){editId=null;fotos=[];$("p2").reset();$("ft").textContent="Nova revista";say("fm","");drawFotos()}
+function fill(m){
+  editId=m.id;fotos=(m.fotos||[]).slice();$("ft").textContent="Editar revista";say("fm","");
+  $("f_cat").value=m.categoria;$("f_ed").value=m.edicao||"";$("f_ano").value=m.ano||"";$("f_preco").value=m.preco;
+  $("f_capa").value=m.capa_nome||"";$("f_est").value=m.estado||"Bom";$("f_st").value=m.status;$("f_dest").checked=m.destaque;drawFotos();
+}
+function drawFotos(){
+  $("fotos").innerHTML=fotos.map(function(u,i){
+    return '<div class="foto"><img src="'+esc(u)+'" alt="Foto '+(i+1)+'"><div><button type="button" class="alt" data-mv="'+i+'" data-d="-1" aria-label="Mover para trás">‹</button><button type="button" class="del" data-x="'+i+'" aria-label="Remover foto">×</button><button type="button" class="alt" data-mv="'+i+'" data-d="1" aria-label="Mover para frente">›</button></div>'+(i===0?'capa':'')+'</div>';
+  }).join("");
+}
+$("fotos").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  if(b.dataset.x!==undefined)fotos.splice(+b.dataset.x,1);
+  if(b.dataset.mv!==undefined){var i=+b.dataset.mv,j=i+ +b.dataset.d;if(j>=0&&j<fotos.length){var t=fotos[i];fotos[i]=fotos[j];fotos[j]=t}}
+  drawFotos();
+});
+function shrink(file){
+  return new Promise(function(ok,no){
+    var img=new Image(),u=URL.createObjectURL(file);
+    img.onload=function(){
+      var k=Math.min(1,1400/Math.max(img.width,img.height)),c=document.createElement("canvas");
+      c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);
+      c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);
+      c.toBlob(function(b){b?ok(b):no(new Error("falha"))},"image/jpeg",.85);
+    };
+    img.onerror=function(){no(new Error("imagem inválida"))};img.src=u;
+  });
+}
+$("f_files").onchange=async function(){
+  var fs=Array.prototype.slice.call(this.files),n=0;
+  for(var i=0;i<fs.length;i++){
+    say("fm","Enviando foto "+(i+1)+" de "+fs.length+"…");
+    try{
+      var blob=await shrink(fs[i]),name=Date.now()+"-"+Math.random().toString(36).slice(2,8)+".jpg";
+      var r=await sb.storage.from("revistas").upload(name,blob,{contentType:"image/jpeg"});
+      if(r.error)throw r.error;
+      fotos.push(sb.storage.from("revistas").getPublicUrl(name).data.publicUrl);n++;drawFotos();
+    }catch(err){say("fm","Erro ao enviar "+fs[i].name+": "+(err.message||err),1);}
+  }
+  this.value="";if(n)say("fm",n+" foto(s) enviada(s). Lembre de salvar a revista.");
+};
+$("cancel").onclick=function(){newForm();tab(1)};
+$("p2").onsubmit=async function(e){
+  e.preventDefault();$("save").disabled=true;say("fm","Salvando…");
+  var cat=$("f_cat").value,row={titulo:cat,categoria:cat,edicao:$("f_ed").value.trim(),ano:$("f_ano").value?+$("f_ano").value:null,
+    capa_nome:$("f_capa").value.trim(),estado:$("f_est").value,preco:+$("f_preco").value,status:$("f_st").value,destaque:$("f_dest").checked,fotos:fotos};
+  var r=editId?await sb.from("revistas").update(row).eq("id",editId):await sb.from("revistas").insert(row);
+  $("save").disabled=false;
+  if(r.error){say("fm","Erro ao salvar: "+r.error.message,1);return}
+  newForm();tab(1);loadList();say("count","Revista salva.");
+};
+
+async function loadCfg(){
+  var r=await sb.from("config").select("*").eq("id",1).single();
+  if(r.data){$("c_nome").value=r.data.nome;$("c_wa").value=r.data.whatsapp;$("c_end").value=r.data.endereco}
+}
+$("p3").onsubmit=async function(e){
+  e.preventDefault();
+  var wa=$("c_wa").value.replace(/\D/g,"");if(wa.length<=11)wa="55"+wa;
+  var r=await sb.from("config").update({nome:$("c_nome").value.trim(),whatsapp:wa,endereco:$("c_end").value.trim()}).eq("id",1);
+  if(r.error)say("cm","Erro ao salvar: "+r.error.message,1);else{$("c_wa").value=wa;say("cm","Dados da loja salvos.")}
+};
+boot();
+</script>
+</body>
+</html>
