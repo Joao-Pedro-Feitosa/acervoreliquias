@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>O Acervo Relíquias</title>
+<meta name="description" content="Revistas Playboy e Sexy para colecionadores. Veja as fotos do estado de cada exemplar e combine a compra pelo WhatsApp.">
+<meta property="og:title" content="O Acervo Relíquias">
+<meta property="og:description" content="Revistas Playboy e Sexy para colecionadores, com fotos do estado de cada exemplar.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,900;1,6..96,600&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--bg:#15100B;--ink:#F1E6D6;--mut:#A8977F;--line:#3A2C1F;--card:#211810;--tag:#F2A33A;--tagink:#1A120A;--red:#E8793A;
@@ -11,206 +16,299 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.5;background-color:var(--bg);
-background-image:radial-gradient(900px 420px at 50% -90px,rgba(242,163,58,.16),transparent 70%);background-repeat:no-repeat}
+body{margin:0;color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.5;background-color:var(--bg);background-image:radial-gradient(900px 420px at 50% -90px,rgba(242,163,58,.16),transparent 70%);background-repeat:no-repeat}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 header{border-top:6px solid var(--tag);padding-top:26px;text-align:center}
-h1{font-family:'Bodoni Moda',Georgia,serif;font-weight:900;font-size:clamp(2.4rem,8.5vw,5rem);line-height:1;margin:0 0 20px;letter-spacing:-.01em}
+h1{font-family:'Bodoni Moda',Georgia,serif;font-weight:900;font-size:clamp(2.4rem,8.5vw,5rem);line-height:1;margin:0 0 20px}
 .strip{border-top:1px solid var(--ink);border-bottom:3px double var(--ink);padding:9px 0;font-size:.92rem;color:var(--mut)}
 .strip .wrap{display:flex;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;align-items:center}
-.strip a{color:var(--ink);text-decoration:none;font-weight:600;margin-left:16px;border-bottom:1px solid var(--tag)}
+.strip a,.cartbtn{color:var(--ink);text-decoration:none;font:600 .92rem Figtree,sans-serif;margin-left:16px;border:0;border-bottom:1px solid var(--tag);background:none;padding:0;cursor:pointer}
 .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 24px;list-style:none;margin:22px 0 6px;padding:0;color:var(--mut);font-size:.93rem}
 .how li{display:flex;gap:10px;align-items:baseline}
 .how b{font-family:'Bodoni Moda',serif;font-size:1.5rem;color:var(--tag);line-height:1}
-.tools{display:flex;flex-wrap:wrap;gap:10px;padding:18px 0 12px}
-input[type=search],select{padding:11px 14px;border:1px solid var(--mut);background:var(--card);color:var(--ink);font:inherit;border-radius:4px}
-input[type=search]{flex:1 1 240px}
+.tools{display:flex;flex-wrap:wrap;gap:10px;padding:18px 0 12px;align-items:center}
+input,select,textarea{padding:11px 14px;border:1px solid var(--mut);background:var(--card);color:var(--ink);font:inherit;border-radius:4px;width:100%}
+.tools input[type=search]{flex:1 1 240px;width:auto}.tools select{width:auto}
+.chk{display:flex;gap:8px;align-items:center;color:var(--ink);font-size:.93rem}.chk input{width:auto}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{border:1px solid var(--mut);background:transparent;color:var(--ink);padding:6px 16px;font:600 .9rem Figtree,sans-serif;border-radius:99px;cursor:pointer}
 .chip[aria-pressed=true]{background:var(--tag);border-color:var(--tag);color:var(--tagink)}
 :focus-visible{outline:3px solid var(--tag);outline-offset:2px}
 .count{color:var(--mut);font-size:.9rem;margin:16px 0 18px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:34px 24px;padding-bottom:56px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:34px 24px;padding-bottom:40px}
+.sk{aspect-ratio:3/4.6;background:linear-gradient(100deg,var(--card) 30%,#2d2217 50%,var(--card) 70%);background-size:200% 100%;animation:sh 1.4s linear infinite}
+@keyframes sh{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
 .item{position:relative;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;box-shadow:0 18px 30px -20px #000}
 .cover{position:relative;display:block;width:100%;aspect-ratio:3/4;padding:0;border:0;cursor:pointer;overflow:hidden;color:#fff;background:#000}
 .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.blur .cover img{filter:blur(18px)}
 .cover .blk{position:absolute;inset:0;padding:14px 12px;display:flex;flex-direction:column;justify-content:space-between;text-align:left}
-.mast{font-family:'Bodoni Moda',serif;font-weight:900;font-size:1.7rem;line-height:1}
-.ed{font-size:.82rem;font-weight:600}
+.mast{font-family:'Bodoni Moda',serif;font-weight:900;font-size:1.7rem;line-height:1}.ed{font-size:.82rem;font-weight:600}
 .stamp{position:absolute;left:0;top:14px;background:var(--tag);color:var(--tagink);font-weight:600;font-size:.8rem;padding:3px 12px 3px 10px}
 .stamp.st{background:var(--red)}
 .item.off .cover img,.item.off .blk{filter:grayscale(1);opacity:.5}
-.plaque{padding:14px 14px 14px;border-top:2px solid var(--tag);display:flex;flex-direction:column;gap:2px;flex:1}
+.plaque{padding:14px;border-top:2px solid var(--tag);display:flex;flex-direction:column;gap:2px;flex:1}
 .plaque h2{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:600;font-size:1.35rem;margin:0;line-height:1.15}
 .meta{color:var(--mut);font-size:.88rem}
 .cond{font-size:.85rem;display:flex;gap:8px;align-items:center;margin-top:4px}
-.dots{color:var(--tag);letter-spacing:2px;font-size:.7rem}
-.dots i{color:var(--line);font-style:normal}
+.dots{color:var(--tag);letter-spacing:2px;font-size:.7rem}.dots i{color:var(--line);font-style:normal}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:14px}
 .pr{font-family:'Bodoni Moda',serif;font-size:1.5rem}
 .btn{display:inline-block;text-align:center;background:var(--tag);color:var(--tagink);text-decoration:none;font:600 .95rem Figtree,sans-serif;padding:9px 16px;border:0;border-radius:4px;cursor:pointer}
 .btn[disabled]{background:transparent;color:var(--mut);border:1px solid var(--line);cursor:default}
-.empty{padding:40px 0;color:var(--mut)}
-footer{border-top:3px double var(--ink);padding:26px 0 44px;color:var(--mut);font-size:.93rem;text-align:center}
-footer .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
-.gate{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px;text-align:center}
-.gate h2{font-family:'Bodoni Moda',serif;font-size:2.2rem;margin:0 0 8px}
-.gate p{color:var(--mut);max-width:42ch;margin:0 auto 20px}
-.gate .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .alt{background:transparent!important;color:var(--ink)!important;border:1px solid var(--mut)!important}
+.empty{padding:40px 0;color:var(--mut)}
+section.blk2{border-top:1px solid var(--line);padding:30px 0}
+.blk2 h2{font-family:'Bodoni Moda',serif;font-size:1.8rem;margin:0 0 10px}
+.sobre{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:24px;align-items:start}
+.sobre img{width:100%;border:1px solid var(--line)}.sobre p{white-space:pre-line;max-width:62ch;margin:0}
+@media (max-width:700px){.sobre{grid-template-columns:1fr}}
+.pform{display:grid;gap:10px;max-width:560px}.hp{position:absolute;left:-9999px}
+footer{border-top:3px double var(--ink);padding:26px 0 44px;color:var(--mut);font-size:.93rem;text-align:center}
+footer .row,.gate .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+footer button.l{background:none;border:0;color:var(--ink);text-decoration:underline;cursor:pointer;font:inherit}
+.gate{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px;text-align:center}
+.gate h2{font-family:'Bodoni Moda',serif;font-size:2.2rem;margin:0 0 8px}.gate p{color:var(--mut);max-width:42ch;margin:0 auto 20px}
 .modal{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.85);overflow:auto;padding:20px}
 .box{position:relative;max-width:520px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-top:3px solid var(--tag);padding:16px}
+.box h2{font-family:'Bodoni Moda',serif;font-style:italic;font-size:1.7rem;margin:14px 0 2px}
+.box .btn{display:block;width:100%;margin-top:10px;padding:13px}
 .x{position:absolute;right:10px;top:10px;z-index:2;background:var(--bg);color:var(--ink);border:1px solid var(--mut);width:38px;height:38px;border-radius:50%;font-size:1.3rem;cursor:pointer}
-.stage{position:relative;aspect-ratio:3/4;max-height:68vh;margin:0 auto;display:grid;place-items:center;overflow:hidden;color:#fff;text-align:center;padding:16px}
-.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.stage{position:relative;aspect-ratio:3/4;max-height:68vh;margin:0 auto;display:grid;place-items:center;overflow:hidden;color:#fff;text-align:center;padding:16px;touch-action:pan-y}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;cursor:zoom-in;transition:transform .2s}
+.stage img.z{transform:scale(2.4);cursor:zoom-out}
 .nav{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0}
 .nav button{background:var(--ink);color:var(--bg);border:0;width:40px;height:40px;border-radius:50%;font-size:1.4rem;cursor:pointer}
 .thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
 .thumbs button{flex:0 0 56px;height:72px;padding:0;border:2px solid var(--line);background:#000;cursor:pointer;opacity:.6}
-.thumbs button[aria-current=true]{border-color:var(--tag);opacity:1}
-.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
-.box h2{font-family:'Bodoni Moda',serif;font-style:italic;font-size:1.7rem;margin:14px 0 2px}
-.box .btn{display:block;width:100%;margin-top:14px;padding:13px}
+.thumbs button[aria-current=true]{border-color:var(--tag);opacity:1}.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
 .mp{font-family:'Bodoni Moda',serif;font-size:1.7rem;margin:6px 0 0}
+.ci{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.ci img{width:44px;height:58px;object-fit:cover}.ci div{flex:1}.ci button{background:none;border:0;color:var(--red);cursor:pointer;font:inherit}
+.tot{display:flex;justify-content:space-between;margin:6px 0}.tot.g{font-family:'Bodoni Moda',serif;font-size:1.4rem}
+.hint{color:var(--mut);font-size:.88rem;margin:6px 0}
+.toast{color:var(--tag);font-size:.9rem;min-height:1.3em;margin:6px 0 0}
 </style>
 </head>
 <body>
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gt" hidden>
-<div><h2 id="gt">Conteúdo para maiores de 18 anos</h2>
-<p>Esta loja vende revistas adultas. Confirme que você tem 18 anos ou mais para entrar.</p>
+<div><h2 id="gt">Conteúdo para maiores de 18 anos</h2><p>Esta loja vende revistas adultas. Confirme que você tem 18 anos ou mais para entrar.</p>
 <div class="row"><button class="btn" id="yes">Tenho 18 anos ou mais</button><button class="btn alt" id="no">Sair</button></div></div></div>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt" hidden>
-<div class="box">
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt" hidden><div class="box">
 <button class="x" id="mx" aria-label="Fechar">×</button>
 <div class="stage" id="stage"></div>
 <div class="nav" id="nav"><button id="prev" aria-label="Foto anterior">‹</button><span id="pos"></span><button id="next" aria-label="Próxima foto">›</button></div>
 <div class="thumbs" id="thumbs"></div>
-<h2 id="mt"></h2><span class="meta" id="mm"></span>
-<div class="cond" id="mc"></div>
-<p class="mp" id="mp"></p>
-<a class="btn" id="mw" target="_blank" rel="noopener">Falar no WhatsApp</a>
+<h2 id="mt"></h2><span class="meta" id="mm"></span><div class="cond" id="mc"></div><p class="mp" id="mp"></p>
+<button class="btn" id="madd">Adicionar ao carrinho</button>
+<a class="btn alt" id="mw" target="_blank" rel="noopener">Comprar só esta pelo WhatsApp</a>
+<button class="btn alt" id="mcp">Copiar link desta revista</button>
+<p class="toast" id="mt2" role="status"></p>
+</div></div>
+
+<div class="modal" id="cart" role="dialog" aria-modal="true" aria-labelledby="ct" hidden><div class="box">
+<button class="x" id="cx" aria-label="Fechar">×</button>
+<h2 id="ct">Seu carrinho</h2>
+<div id="cl"></div>
+<div id="cs"></div>
+<label for="cnome" class="hint">Seu nome</label><input id="cnome" autocomplete="name">
+<label for="ccep" class="hint">CEP para o envio (opcional)</label><input id="ccep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000">
+<div id="cpix" class="hint"></div>
+<a class="btn" id="csend" target="_blank" rel="noopener">Enviar pedido pelo WhatsApp</a>
+<p class="hint">O pedido vai como mensagem. O pagamento e o envio são combinados na conversa.</p>
+</div></div>
+
+<div class="modal" id="termos" role="dialog" aria-modal="true" aria-labelledby="tt" hidden><div class="box">
+<button class="x" id="tx" aria-label="Fechar">×</button>
+<h2 id="tt">Termos e privacidade</h2>
+<p><b>Produtos.</b> Vendemos revistas usadas. O estado de cada exemplar é informado e fotografado no anúncio.</p>
+<p><b>Compra.</b> O pedido é combinado pelo WhatsApp. O site não processa pagamento.</p>
+<p><b>Desistência.</b> Nas compras à distância, você pode desistir em até 7 dias após receber, com a revista no mesmo estado em que chegou (Código de Defesa do Consumidor, art. 49).</p>
+<p><b>Seus dados.</b> Usamos nome, contato e CEP só para responder seu pedido ou sua procura. Não vendemos dados. O carrinho fica salvo no seu navegador. Registramos cliques anônimos para saber quais revistas despertam interesse. Para apagar seus dados, peça pelo WhatsApp.</p>
 </div></div>
 
 <header>
 <div class="wrap"><h1 id="nome">O Acervo Relíquias</h1></div>
-<div class="strip"><div class="wrap"><span>Playboy e Sexy para colecionadores</span><span><a id="ig" target="_blank" rel="noopener">Instagram</a><a id="wa" target="_blank" rel="noopener">WhatsApp</a></span></div></div>
+<div class="strip"><div class="wrap"><span>Playboy e Sexy para colecionadores</span><span><a id="ig" target="_blank" rel="noopener">Instagram</a><a id="wa" target="_blank" rel="noopener">WhatsApp</a><button class="cartbtn" id="cb">Carrinho (<span id="cn">0</span>)</button></span></div></div>
 </header>
 
 <main class="wrap">
 <ol class="how"><li><b>1</b>Escolha a revista</li><li><b>2</b>Confira as fotos do estado</li><li><b>3</b>Combine a compra pelo WhatsApp</li></ol>
 <div class="tools">
 <input type="search" id="q" placeholder="Buscar por revista, edição, ano ou capa" aria-label="Buscar revistas">
+<select id="dec" aria-label="Década"><option value="">Todas as décadas</option></select>
 <select id="so" aria-label="Ordenar"><option value="rec">Disponíveis primeiro</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option><option value="ano">Mais antigas</option><option value="anod">Mais recentes</option></select>
+<label class="chk"><input type="checkbox" id="so1"> Só disponíveis</label>
 </div>
 <div class="chips" id="chips" role="group" aria-label="Categorias"></div>
 <p class="count" id="count"></p>
 <div class="grid" id="grid"></div>
+
+<section class="blk2" id="sobre" hidden><div class="sobre"><img id="sf" alt="" hidden><div><h2>Sobre o acervo</h2><p id="stx"></p></div></div></section>
+
+<section class="blk2" id="procura"><h2>Não achou a sua?</h2>
+<p class="meta">Diga qual edição você procura. Se aparecer, avisamos.</p>
+<form class="pform" id="pf">
+<input id="pn" placeholder="Seu nome" maxlength="80" required aria-label="Seu nome">
+<input id="pc" placeholder="WhatsApp ou e-mail" maxlength="120" required aria-label="Seu contato">
+<textarea id="pt" rows="3" placeholder="Ex.: Playboy de dezembro de 2000, com a capa da…" maxlength="500" required aria-label="O que você procura"></textarea>
+<input class="hp" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="btn" type="submit" style="justify-self:start">Enviar pedido de procura</button>
+<p class="toast" id="pm" role="status"></p>
+</form></section>
 </main>
 
 <footer><div class="wrap">
 <div class="row"><a class="btn" id="wa2" target="_blank" rel="noopener">Falar no WhatsApp</a><a class="btn alt" id="ig2" target="_blank" rel="noopener">Ver no Instagram</a></div>
-Envio para todo o Brasil. <span id="end"></span>
+Envio para todo o Brasil. <span id="end"></span><br><button class="l" id="tl">Termos e privacidade</button>
 </div></footer>
 
 <script>
 var SB="https://bbxjmgsspiwhwpppmlus.supabase.co", KEY="sb_publishable_9IIaStSDOL4TxDsvmf2WrA_wft5Uzrl";
-var WHATSAPP="", REVISTAS=[], cat="Todas", $=function(i){return document.getElementById(i)};
+var $=function(i){return document.getElementById(i)}, REVISTAS=[], CFG={}, WHATSAPP="", cat="Todas", CART=[];
 var grid=$('grid'), q=$('q'), chips=$('chips'), count=$('count'), so=$('so');
 var NIV={"Ótimo":5,"Muito bom":4,"Bom":3,"Regular":2,"Com defeitos":1}, PESO={disponivel:0,reservada:1,vendida:2};
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function api(p){return fetch(SB+"/rest/v1/"+p,{headers:{apikey:KEY}}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+function hdr(x){var h={apikey:KEY};if(x)h["Content-Type"]="application/json",h.Prefer="return=minimal";return h}
+function api(p){return fetch(SB+"/rest/v1/"+p,{headers:hdr()}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+function post(t,b){return fetch(SB+"/rest/v1/"+t,{method:"POST",headers:hdr(1),body:JSON.stringify(b),keepalive:true})}
+function track(id,tipo){try{post("cliques",{revista_id:id,tipo:tipo}).catch(function(){})}catch(e){}}
 function money(p){return "R$ "+(p%1?p.toFixed(2).replace(".",","):p)}
-function mapR(r,i){var f=r.fotos||[];return {i:i,t:r.titulo,e:r.edicao||"",a:r.ano||"",c:r.categoria,m:r.capa_nome||"",s:r.estado||"",p:Number(r.preco),fotos:f,img:f[0],st:r.status,d:r.destaque,cor:r.categoria==="Sexy"?"#9F1239":"#1F2937"}}
-function cond(s){var n=NIV[s];if(!n)return s?'<span>'+esc(s)+'</span>':'';
-  return '<span class="dots" aria-hidden="true">'+"●".repeat(n)+'<i>'+"●".repeat(5-n)+'</i></span><span>Estado: '+esc(s)+'</span>'}
-function cats(){return ["Todas"].concat(REVISTAS.map(function(r){return r.c}).filter(function(v,i,a){return a.indexOf(v)===i}).sort())}
+function wa(n){return n?"https://wa.me/"+n:"#"}
+function th(u){return u.replace(/\.jpg$/,"_t.jpg")}
+function pic(u,alt,thumb){return '<img src="'+esc(thumb?th(u):u)+'" data-f="'+esc(u)+'" alt="'+esc(alt)+'" loading="lazy" onerror="if(this.dataset.f&&this.src!==this.dataset.f){this.src=this.dataset.f}">'}
+function mapR(r,i){var f=r.fotos||[];return {i:i,id:r.id,t:r.titulo,e:r.edicao||"",a:r.ano||"",c:r.categoria,m:r.capa_nome||"",s:r.estado||"",p:Number(r.preco),fotos:f,img:f[0],st:r.status,d:r.destaque,rar:r.raridade,n:Date.now()-new Date(r.criado_em)<6048e5,dec:r.ano?Math.floor(r.ano/10)*10:0,cor:r.categoria==="Sexy"?"#9F1239":"#1F2937"}}
+function cond(s){var n=NIV[s];if(!n)return s?'<span>'+esc(s)+'</span>':'';return '<span class="dots" aria-hidden="true">'+"●".repeat(n)+'<i>'+"●".repeat(5-n)+'</i></span><span>Estado: '+esc(s)+'</span>'}
+function byId(id){return REVISTAS.filter(function(r){return r.id===id})[0]}
+
+/* carrinho */
+try{CART=JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){}
+function saveCart(){try{localStorage.setItem('cart',JSON.stringify(CART))}catch(e){}$('cn').textContent=itens().length}
+function itens(){return CART.map(byId).filter(function(r){return r&&r.st==='disponivel'})}
+function addCart(r){if(CART.indexOf(r.id)<0){CART.push(r.id);track(r.id,'carrinho')}saveCart()}
+function frete(sub){
+  var f=CFG.frete_fixo,g=CFG.frete_gratis_acima;
+  if(f==null)return null;f=Number(f);if(g!=null&&sub>=Number(g))return 0;return f;
+}
+function drawCart(){
+  var its=itens(),sub=its.reduce(function(a,r){return a+r.p},0),fr=frete(sub);
+  $('cl').innerHTML=its.length?its.map(function(r){return '<div class="ci">'+(r.img?pic(r.img,'',1):'')+'<div><b>'+esc(r.t)+' '+esc(r.e)+'</b><br><span class="meta">'+r.a+' · '+money(r.p)+'</span></div><button data-rm="'+r.id+'">Tirar</button></div>'}).join(""):'<p class="empty">Seu carrinho está vazio.</p>';
+  $('cs').innerHTML=its.length?'<div class="tot"><span>Subtotal</span><span>'+money(sub)+'</span></div><div class="tot"><span>Frete</span><span>'+(fr==null?'a combinar pelo CEP':fr===0?'grátis':money(fr))+'</span></div>'+(fr==null?'':'<div class="tot g"><span>Total</span><span>'+money(sub+fr)+'</span></div>'):'';
+  $('cpix').innerHTML=CFG.pix&&its.length?'Pagamento por Pix. Chave: <b id="pk">'+esc(CFG.pix)+'</b> <button class="chip" id="pkc">Copiar</button>':'';
+  var a=$('csend');a.hidden=!its.length;
+  var msg="Olá! Quero comprar:\n"+its.map(function(r){return "- "+r.t+" "+r.e+" ("+r.a+"): "+money(r.p)}).join("\n")+"\nSubtotal: "+money(sub)+"\nFrete: "+(fr==null?"a combinar":fr===0?"grátis":money(fr))+(($('cnome').value)?"\nNome: "+$('cnome').value:"")+(($('ccep').value)?"\nCEP: "+$('ccep').value:"");
+  a.href=wa(WHATSAPP)+"?text="+encodeURIComponent(msg);
+}
+$('cb').onclick=function(){drawCart();$('cart').hidden=false;document.body.style.overflow='hidden'};
+$('cx').onclick=function(){$('cart').hidden=true;document.body.style.overflow=''};
+$('cl').onclick=function(e){var b=e.target.closest('[data-rm]');if(b){CART=CART.filter(function(x){return x!==b.dataset.rm});saveCart();drawCart();draw()}};
+$('cnome').oninput=$('ccep').oninput=drawCart;
+$('csend').onclick=function(){itens().forEach(function(r){track(r.id,'whatsapp')})};
+$('cpix').onclick=function(e){if(e.target.id==='pkc'){try{navigator.clipboard.writeText(CFG.pix);e.target.textContent='Copiado'}catch(x){}}};
+
+/* catálogo */
 function drawChips(){
-  chips.innerHTML="";
-  cats().forEach(function(c){
-    var b=document.createElement('button');b.className='chip';b.textContent=c;b.setAttribute('aria-pressed',c===cat);
-    b.onclick=function(){cat=c;drawChips();draw()};chips.appendChild(b);
-  });
+  var cs=["Todas","Novidades","Raridades"].concat(REVISTAS.map(function(r){return r.c}).filter(function(v,i,a){return a.indexOf(v)===i}).sort());
+  chips.innerHTML="";cs.forEach(function(c){var b=document.createElement('button');b.className='chip';b.textContent=c;b.setAttribute('aria-pressed',c===cat);b.onclick=function(){cat=c;drawChips();draw()};chips.appendChild(b)});
+  var ds=REVISTAS.map(function(r){return r.dec}).filter(function(v,i,a){return v&&a.indexOf(v)===i}).sort(),cur=$('dec').value;
+  $('dec').innerHTML='<option value="">Todas as décadas</option>'+ds.map(function(d){return '<option value="'+d+'"'+(String(d)===cur?' selected':'')+'>Anos '+d+'</option>'}).join("");
 }
 function draw(){
-  var t=q.value.trim().toLowerCase(),o=so.value;
+  var t=q.value.trim().toLowerCase(),o=so.value,dc=$('dec').value,so1=$('so1').checked;
   var lista=REVISTAS.filter(function(r){
-    return (cat==="Todas"||r.c===cat)&&(r.t+" "+r.e+" "+r.a+" "+r.m).toLowerCase().indexOf(t)>-1;
+    var okc=cat==="Todas"||(cat==="Novidades"?r.n:cat==="Raridades"?r.rar:r.c===cat);
+    return okc&&(!dc||String(r.dec)===dc)&&(!so1||r.st==='disponivel')&&(r.t+" "+r.e+" "+r.a+" "+r.m).toLowerCase().indexOf(t)>-1;
   }).sort(function(a,b){
-    if(o==="menor")return a.p-b.p||a.i-b.i;
-    if(o==="maior")return b.p-a.p||a.i-b.i;
-    if(o==="ano")return (a.a||9999)-(b.a||9999)||a.i-b.i;
-    if(o==="anod")return (b.a||0)-(a.a||0)||a.i-b.i;
+    if(o==="menor")return a.p-b.p||a.i-b.i;if(o==="maior")return b.p-a.p||a.i-b.i;
+    if(o==="ano")return (a.a||9999)-(b.a||9999)||a.i-b.i;if(o==="anod")return (b.a||0)-(a.a||0)||a.i-b.i;
     return PESO[a.st]-PESO[b.st]||a.i-b.i;
   });
   var disp=lista.filter(function(r){return r.st==='disponivel'}).length;
   count.textContent=lista.length+(lista.length===1?" revista":" revistas")+" · "+disp+(disp===1?" disponível":" disponíveis");
-  if(!lista.length){grid.innerHTML='<p class="empty">Nenhuma revista encontrada. Tente outra busca ou categoria.</p>';return}
+  grid.className="grid"+(CFG.desfocar?" blur":"");
+  if(!lista.length){grid.innerHTML='<p class="empty">Nenhuma revista encontrada. Tente outra busca ou filtro, ou peça a edição na lista de procura abaixo.</p>';return}
   grid.innerHTML=lista.map(function(r){
     var ok=r.st==='disponivel';
-    var face=r.img?'<img src="'+esc(r.img)+'" alt="Capa da '+esc(r.t)+' '+esc(r.e)+'" loading="lazy">'
-      :'<div class="blk" style="background:'+r.cor+'"><div class="mast">'+esc(r.t)+'</div><div class="ed">'+esc(r.e)+' · '+r.a+'</div></div>';
-    var stamp=!ok?'<span class="stamp st">'+(r.st==='vendida'?'Vendida':'Reservada')+'</span>':(r.d?'<span class="stamp">Destaque</span>':'');
+    var face=r.img?pic(r.img,'Capa da '+r.t+' '+r.e,1):'<div class="blk" style="background:'+r.cor+'"><div class="mast">'+esc(r.t)+'</div><div class="ed">'+esc(r.e)+' · '+r.a+'</div></div>';
+    var stamp=!ok?'<span class="stamp st">'+(r.st==='vendida'?'Vendida':'Reservada')+'</span>':r.rar?'<span class="stamp">Raridade</span>':r.n?'<span class="stamp">Novidade</span>':r.d?'<span class="stamp">Destaque</span>':'';
     return '<article class="item'+(ok?'':' off')+'"><button class="cover" data-i="'+r.i+'" aria-label="Ver fotos de '+esc(r.t)+' '+esc(r.e)+'">'+face+'</button>'+stamp+
-      '<div class="plaque"><h2>'+esc(r.t)+' '+esc(r.e)+'</h2><span class="meta">'+(r.a||'')+(r.m?' · Capa: '+esc(r.m):'')+'</span>'+
-      '<div class="cond">'+cond(r.s)+'</div>'+
-      '<div class="foot"><span class="pr">'+money(r.p)+'</span>'+
-      (ok?'<button class="btn" data-i="'+r.i+'">Comprar</button>':'<button class="btn" disabled>'+(r.st==='vendida'?'Vendida':'Reservada')+'</button>')+'</div></div></article>';
+    '<div class="plaque"><h2>'+esc(r.t)+' '+esc(r.e)+'</h2><span class="meta">'+(r.a||'')+(r.m?' · Capa: '+esc(r.m):'')+'</span><div class="cond">'+cond(r.s)+'</div>'+
+    '<div class="foot"><span class="pr">'+money(r.p)+'</span>'+(ok?'<button class="btn" data-i="'+r.i+'">Comprar</button>':'<button class="btn" disabled>'+(r.st==='vendida'?'Vendida':'Reservada')+'</button>')+'</div></div></article>';
   }).join("");
 }
-function wa(n){return n?"https://wa.me/"+n:"#"}
 function load(){
-  count.textContent="Carregando…";
+  count.textContent="Carregando…";grid.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>';
   Promise.all([api("revistas?select=*&order=destaque.desc,criado_em.desc"),api("config?select=*&id=eq.1")]).then(function(x){
-    REVISTAS=x[0].map(mapR);var c=x[1][0]||{};WHATSAPP=c.whatsapp||"";
-    if(c.nome){document.title=c.nome;$('nome').textContent=c.nome}
+    REVISTAS=x[0].map(mapR);CFG=x[1][0]||{};WHATSAPP=CFG.whatsapp||"";
+    if(CFG.nome){document.title=CFG.nome;$('nome').textContent=CFG.nome}
     $('wa').href=$('wa2').href=wa(WHATSAPP);
-    $('ig').href=$('ig2').href="https://www.instagram.com/"+(c.instagram||"oacervo.reliquias")+"/";
-    $('end').textContent=c.endereco||"";
-    drawChips();draw();
+    $('ig').href=$('ig2').href="https://www.instagram.com/"+(CFG.instagram||"oacervo.reliquias")+"/";
+    $('end').textContent=CFG.endereco||"";
+    if(CFG.sobre){$('sobre').hidden=false;$('stx').textContent=CFG.sobre;if(CFG.sobre_foto){$('sf').src=CFG.sobre_foto;$('sf').hidden=false}}
+    drawChips();draw();saveCart();
+    var rid=new URLSearchParams(location.search).get('r'),r=rid&&byId(rid);if(r)openM(r.i,null);
   }).catch(function(){count.textContent="";grid.innerHTML='<p class="empty">Não foi possível carregar o catálogo agora. Tente novamente em instantes.</p>'});
 }
 
-/* modal com carrossel */
-var modal=$('modal'),stage=$('stage'),thumbs=$('thumbs'),nav=$('nav'),pos=$('pos'),cur=null,fotos=[],k=0,lastBtn=null;
+/* janela da revista: carrossel, zoom e deslize */
+var modal=$('modal'),stage=$('stage'),thumbs=$('thumbs'),nav=$('nav'),pos=$('pos'),cur=null,fotos=[],k=0,lastBtn=null,x0=null;
 function show(){
-  if(!fotos.length){
-    stage.style.background=cur.cor;
-    stage.innerHTML='<div><div style="font:900 2rem \'Bodoni Moda\',serif">'+esc(cur.t)+'</div><p>'+esc(cur.e)+' · '+cur.a+'<br>Fotos do estado em breve. Peça mais fotos pelo WhatsApp.</p></div>';return;
-  }
+  if(!fotos.length){stage.style.background=cur.cor;stage.innerHTML='<div><div style="font:900 2rem \'Bodoni Moda\',serif">'+esc(cur.t)+'</div><p>'+esc(cur.e)+' · '+cur.a+'<br>Fotos do estado em breve. Peça mais fotos pelo WhatsApp.</p></div>';return}
   stage.style.background='#000';
   stage.innerHTML='<img src="'+esc(fotos[k])+'" alt="Foto '+(k+1)+' de '+fotos.length+' da '+esc(cur.t)+' '+esc(cur.e)+'">';
   pos.textContent=(k+1)+' / '+fotos.length;
   Array.prototype.forEach.call(thumbs.children,function(b,j){b.setAttribute('aria-current',j===k)});
 }
 function go(d){if(fotos.length>1){k=(k+d+fotos.length)%fotos.length;show()}}
+stage.addEventListener('click',function(e){var im=e.target.closest('img');if(!im)return;var z=im.classList.toggle('z');if(z)org(im,e)});
+function org(im,e){var b=im.getBoundingClientRect();im.style.transformOrigin=((e.clientX-b.left)/b.width*100)+'% '+((e.clientY-b.top)/b.height*100)+'%'}
+stage.addEventListener('mousemove',function(e){var im=stage.querySelector('img.z');if(im)org(im,e)});
+stage.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+stage.addEventListener('touchmove',function(e){var im=stage.querySelector('img.z');if(im)org(im,e.touches[0])},{passive:true});
+stage.addEventListener('touchend',function(e){if(x0==null||stage.querySelector('img.z'))return;var dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>50)go(dx<0?1:-1)});
 function openM(i,btn){
-  cur=REVISTAS[i];lastBtn=btn;k=0;
-  fotos=cur.fotos&&cur.fotos.length?cur.fotos:(cur.img?[cur.img]:[]);
+  cur=REVISTAS[i];lastBtn=btn;k=0;fotos=cur.fotos&&cur.fotos.length?cur.fotos:(cur.img?[cur.img]:[]);
   nav.hidden=thumbs.hidden=fotos.length<2;
-  thumbs.innerHTML=fotos.map(function(f,j){return '<button data-k="'+j+'" aria-label="Ver foto '+(j+1)+'"><img src="'+esc(f)+'" alt=""></button>'}).join("");
-  $('mt').textContent=cur.t+' '+cur.e;
-  $('mm').textContent=(cur.a||'')+(cur.m?' · Capa: '+cur.m:'');
-  $('mc').innerHTML=cond(cur.s);
-  $('mp').textContent=money(cur.p);
-  var mw=$('mw');mw.hidden=cur.st!=='disponivel';
-  mw.href=wa(WHATSAPP)+'?text='+encodeURIComponent('Olá! Quero comprar a revista '+cur.t+' '+cur.e+' ('+cur.a+'). Ainda está disponível?');
-  show();modal.hidden=false;document.body.style.overflow='hidden';$('mx').focus();
+  thumbs.innerHTML=fotos.map(function(f,j){return '<button data-k="'+j+'" aria-label="Ver foto '+(j+1)+'">'+pic(f,'',1)+'</button>'}).join("");
+  $('mt').textContent=cur.t+' '+cur.e;$('mm').textContent=(cur.a||'')+(cur.m?' · Capa: '+cur.m:'');$('mc').innerHTML=cond(cur.s);$('mp').textContent=money(cur.p);
+  var ok=cur.st==='disponivel';$('madd').hidden=$('mw').hidden=!ok;
+  $('madd').textContent=CART.indexOf(cur.id)>-1?'Já está no carrinho. Ver carrinho':'Adicionar ao carrinho';
+  $('mw').href=wa(WHATSAPP)+'?text='+encodeURIComponent('Olá! Quero comprar a revista '+cur.t+' '+cur.e+' ('+cur.a+'). Ainda está disponível?');
+  $('mt2').textContent=ok?'':'Esta revista está '+(cur.st==='vendida'?'vendida.':'reservada.');
+  show();modal.hidden=false;document.body.style.overflow='hidden';$('mx').focus();track(cur.id,'ver');
+  try{history.replaceState(null,'','?r='+cur.id)}catch(e){}
 }
-function closeM(){modal.hidden=true;document.body.style.overflow='';if(lastBtn)lastBtn.focus()}
+function closeM(){modal.hidden=true;document.body.style.overflow='';if(lastBtn)lastBtn.focus();try{history.replaceState(null,'',location.pathname)}catch(e){}}
+$('madd').onclick=function(){if(CART.indexOf(cur.id)>-1){closeM();$('cb').click();return}addCart(cur);this.textContent='Adicionado. Ver carrinho'};
+$('mw').onclick=function(){track(cur.id,'whatsapp')};
+$('mcp').onclick=function(){var u=location.origin+location.pathname+'?r='+cur.id;try{navigator.clipboard.writeText(u);$('mt2').textContent='Link copiado.'}catch(e){$('mt2').textContent=u}};
 grid.addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(b)openM(+b.dataset.i,b)});
 thumbs.addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(b){k=+b.dataset.k;show()}});
 $('prev').onclick=function(){go(-1)};$('next').onclick=function(){go(1)};$('mx').onclick=closeM;
-modal.addEventListener('click',function(e){if(e.target===modal)closeM()});
-document.addEventListener('keydown',function(e){if(modal.hidden)return;if(e.key==='Escape')closeM();if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
+['modal','cart','termos'].forEach(function(id){$(id).addEventListener('click',function(e){if(e.target===this){if(id==='modal')closeM();else{this.hidden=true;document.body.style.overflow=''}}})});
+$('tl').onclick=function(){$('termos').hidden=false;document.body.style.overflow='hidden'};
+$('tx').onclick=function(){$('termos').hidden=true;document.body.style.overflow=''};
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){if(!modal.hidden)closeM();else{$('cart').hidden=true;$('termos').hidden=true;document.body.style.overflow=''}}
+  if(!modal.hidden){if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)}
+});
+
+/* lista de procura */
+$('pf').onsubmit=function(e){
+  e.preventDefault();if($('hp').value)return;$('pm').textContent='Enviando…';
+  post("procuras",{nome:$('pn').value.trim(),contato:$('pc').value.trim(),texto:$('pt').value.trim()}).then(function(r){
+    if(!r.ok)throw 0;$('pf').reset();$('pm').textContent='Recebido. Avisamos se aparecer.';
+  }).catch(function(){$('pm').textContent='Não foi possível enviar agora. Chame no WhatsApp.'});
+};
 
 /* aviso de maioridade */
-var gate=$('gate'),ok=false;
-try{ok=sessionStorage.getItem('maior18')==='1'}catch(e){}
-gate.hidden=ok;
+var gate=$('gate'),okg=false;try{okg=sessionStorage.getItem('maior18')==='1'}catch(e){}
+gate.hidden=okg;
 $('yes').onclick=function(){gate.hidden=true;try{sessionStorage.setItem('maior18','1')}catch(e){}};
 $('no').onclick=function(){location.href='https://www.google.com'};
-q.addEventListener('input',draw);so.addEventListener('change',draw);
+q.addEventListener('input',draw);so.addEventListener('change',draw);$('dec').addEventListener('change',draw);$('so1').addEventListener('change',draw);
 load();
 </script>
 </body>
