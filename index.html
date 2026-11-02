@@ -227,7 +227,7 @@ async function reservar(ids){
     var params=new URLSearchParams({select:"id,status",id:"in.("+ids.map(String).join(",")+")"});
     var check=await fetch(SB+"/rest/v1/revistas?"+params.toString(),{headers:hdr()});
     if(!check.ok)return {ok:false,message:"Não foi possível confirmar a situação dos exemplares. Tente novamente."};
-    var rows=await check.json(),confirmed=ids.every(function(id){var item=rows.filter(function(x){return x.id===id})[0];return item&&item.status==="reservada"});
+    var rows=await check.json(),confirmed=ids.every(function(id){var item=rows.filter(function(x){return x.id===id})[0];return item&&(item.status==="reservada"||item.status==="reservado")});
     if(!confirmed)return {ok:false,message:"Um ou mais exemplares não estão mais disponíveis. Atualize o catálogo antes de continuar."};
     return {ok:true};
   }catch(e){return {ok:false,message:"Falha de conexão ao solicitar a reserva. Verifique sua internet e tente novamente."}}
