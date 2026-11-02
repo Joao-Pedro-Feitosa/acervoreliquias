@@ -63,7 +63,40 @@ section.blk2{border-top:1px solid var(--line);padding:30px 0}
 .blk2 h2{font-family:'Bodoni Moda',serif;font-size:1.8rem;margin:0 0 10px}
 .sobre{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:24px;align-items:start}
 .sobre img{width:100%;border:1px solid var(--line)}.sobre p{white-space:pre-line;max-width:62ch;margin:0}
-@media (max-width:700px){.sobre{grid-template-columns:1fr}}
+@media (max-width:700px){
+.sobre{grid-template-columns:1fr}
+.wrap{padding-left:14px;padding-right:14px}
+header{padding-top:20px}
+.strip .wrap{justify-content:center;text-align:center}
+.strip .wrap>span:last-child{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.strip a,.cartbtn{margin-left:0}
+.how{grid-template-columns:1fr;gap:8px;margin-top:18px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding-top:14px}
+.tools input[type=search]{grid-column:1/-1;width:100%;min-width:0}
+.tools select{width:100%;min-width:0}
+.tools .chk{align-self:center}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+.plaque{padding:10px;gap:4px}
+.plaque h2{font-size:clamp(1rem,4vw,1.25rem);overflow-wrap:anywhere}
+.meta{font-size:.8rem}
+.cond{font-size:.78rem;flex-wrap:wrap}
+.foot{align-items:flex-start;flex-direction:column;gap:8px;padding-top:8px}
+.pr{font-size:1.25rem}
+.foot .btn{width:100%;padding:9px 8px}
+.stamp{top:8px;font-size:.7rem;padding:3px 8px}
+.box{padding:12px}
+.modal{padding:10px}
+.stage{max-height:58vh}
+}
+@media (max-width:360px){
+.grid{grid-template-columns:1fr}
+.tools{grid-template-columns:1fr}
+.tools input[type=search]{grid-column:auto}
+}
+@media (min-width:701px) and (max-width:900px){
+.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px}
+.wrap{padding-left:18px;padding-right:18px}
+}
 .pform{display:grid;gap:10px;max-width:560px}.hp{position:absolute;left:-9999px}
 footer{border-top:3px double var(--ink);padding:26px 0 44px;color:var(--mut);font-size:.93rem;text-align:center}
 footer .row,.gate .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
@@ -226,7 +259,7 @@ function draw(){
   var t=q.value.trim().toLowerCase(),o=so.value,dc=$('dec').value,so1=$('so1').checked,so2=$('so2').checked;
   var lista=REVISTAS.filter(function(r){
     var okc=cat==="Todas"||(cat==="Novidades"?r.n:cat==="Raridades"?r.rar:r.c===cat);
-    return okc&&(!dc||String(r.dec)===dc)&&(!so1||r.st==='disponivel')&&(!so2||r.po==='completo')&&(r.t+" "+r.e+" "+r.a+" "+r.m).toLowerCase().indexOf(t)>-1;
+    return okc&&(!dc||String(r.dec)===dc)&&(!so1||r.st==='disponivel')&&(!so2||r.po==='completo')&&(r.t+" "+r.c+" "+r.e+" "+r.a+" "+r.m+" "+r.tp+" "+r.ob).toLowerCase().indexOf(t)>-1;
   }).sort(function(a,b){
     if(o==="menor")return a.p-b.p||a.i-b.i;if(o==="maior")return b.p-a.p||a.i-b.i;
     if(o==="ano")return (a.a||9999)-(b.a||9999)||a.i-b.i;if(o==="anod")return (b.a||0)-(a.a||0)||a.i-b.i;
