@@ -72,7 +72,7 @@ button:disabled{opacity:.5}
 <button id="t1" aria-pressed="true">Revistas</button><button id="t2" aria-pressed="false">Nova revista</button><button id="t3" aria-pressed="false">Loja</button><button id="t4" aria-pressed="false">Procuras</button>
 </div>
 
-<div id="p1"><div class="row"><input id="lq" type="search" placeholder="Buscar na lista" aria-label="Buscar"><select id="lf2" aria-label="Filtrar situação"><option value="">Todas</option><option value="disponivel">Disponíveis</option><option value="reservada">Reservadas</option><option value="vendida">Vendidas</option><option value="rascunho">Rascunhos</option></select></div><p class="msg" id="count"></p><div id="list"></div></div>
+<div id="p1"><div class="row"><input id="lq" type="search" placeholder="Buscar por título, categoria, edição..." aria-label="Buscar revistas por título, categoria, edição, ano ou capa"><select id="lf2" aria-label="Filtrar situação"><option value="">Todas</option><option value="disponivel">Disponíveis</option><option value="reservada">Reservadas</option><option value="vendida">Vendidas</option><option value="rascunho">Rascunhos</option></select></div><p class="msg" id="count"></p><div id="list"></div></div>
 
 <div id="p4" hidden><p class="msg" id="pcount"></p><div id="plist"></div></div>
 
@@ -186,7 +186,7 @@ async function loadList0(){
   list=r.data;refreshCategories();say("count",list.length+(list.length===1?" revista":" revistas")+" cadastradas");
   $("list").innerHTML=list.map(function(m,i){
     var f=(m.fotos||[])[0];
-    return '<div class="card item" data-s="'+m.status+'" data-q="'+esc((m.titulo+" "+(m.edicao||"")+" "+(m.ano||"")+" "+(m.capa_nome||"")).toLowerCase())+'">'+(f?'<img src="'+esc(f)+'" alt="">':'<div class="ph">sem foto</div>')+
+    return '<div class="card item" data-s="'+m.status+'" data-q="'+esc((m.titulo+" "+(m.categoria||"")+" "+(m.edicao||"")+" "+(m.ano||"")+" "+(m.capa_nome||"")+" "+(m.tipo||"")+" "+(m.obs||"")).toLowerCase())+'">'+(f?'<img src="'+esc(f)+'" alt="">':'<div class="ph">sem foto</div>')+
     '<div class="t"><b>'+esc(m.titulo)+' '+esc(m.edicao)+(m.destaque?' ★':'')+'</b><span>'+esc(m.ano)+' · '+esc(m.estado)+' · '+money(m.preco)+' · '+(m.fotos||[]).length+' foto(s)</span><br><span>'+statTxt(m.id)+'</span>'+
     '<div class="acts"><select data-st="'+m.id+'" aria-label="Situação">'+
     ["disponivel","reservada","vendida","rascunho"].map(function(x){return '<option value="'+x+'"'+(m.status===x?' selected':'')+'>'+{disponivel:"Disponível",reservada:"Reservada",vendida:"Vendida",rascunho:"Rascunho"}[x]+'</option>'}).join("")+
