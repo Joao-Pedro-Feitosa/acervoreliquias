@@ -7,7 +7,7 @@
 <meta name="description" content="Revistas Playboy e Sexy para colecionadores. Veja as fotos do estado de cada exemplar e combine a compra pelo WhatsApp.">
 <meta property="og:title" content="O Acervo Relíquias">
 <meta property="og:description" content="Revistas Playboy e Sexy para colecionadores, com fotos do estado de cada exemplar.">
-<meta property="og:type" content="website">
+<meta property="og:type" content="website"><meta name="theme-color" content="#15100B"><link rel="canonical" href="https://acervoreliquias.vercel.app/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,900;1,6..96,600&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -89,6 +89,7 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 .tot{display:flex;justify-content:space-between;margin:6px 0}.tot.g{font-family:'Bodoni Moda',serif;font-size:1.4rem}
 .hint{color:var(--mut);font-size:.88rem;margin:6px 0}
 .toast{color:var(--tag);font-size:.9rem;min-height:1.3em;margin:6px 0 0}
+.det{font-size:.85rem;color:var(--mut);margin:8px 0}.det summary{cursor:pointer;color:var(--ink)}.det li{margin:3px 0}
 </style>
 </head>
 <body>
@@ -101,10 +102,10 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 <div class="stage" id="stage"></div>
 <div class="nav" id="nav"><button id="prev" aria-label="Foto anterior">‹</button><span id="pos"></span><button id="next" aria-label="Próxima foto">›</button></div>
 <div class="thumbs" id="thumbs"></div>
-<h2 id="mt"></h2><span class="meta" id="mm"></span><div class="cond" id="mc"></div><p class="mp" id="mp"></p>
+<h2 id="mt"></h2><span class="meta" id="mm"></span><div class="cond" id="mc"></div><p class="hint" id="md"></p><details class="det"><summary>O que significa cada estado?</summary><ul><li><b>Ótimo</b>: sem marcas visíveis de uso.</li><li><b>Muito bom</b>: pequenas marcas de manuseio.</li><li><b>Bom</b>: sinais de uso, mas inteira e completa.</li><li><b>Regular</b>: desgaste evidente, sem partes faltando.</li><li><b>Com defeitos</b>: rasgos, partes faltando ou lombada solta. As fotos mostram tudo.</li></ul></details><p class="mp" id="mp"></p>
 <button class="btn" id="madd">Adicionar ao carrinho</button>
 <a class="btn alt" id="mw" target="_blank" rel="noopener">Comprar só esta pelo WhatsApp</a>
-<button class="btn alt" id="mcp">Copiar link desta revista</button>
+<button class="btn alt" id="mav" hidden>Avise-me se aparecer outra igual</button><button class="btn alt" id="mcp">Copiar link desta revista</button>
 <p class="toast" id="mt2" role="status"></p>
 </div></div>
 
@@ -140,11 +141,13 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 <input type="search" id="q" placeholder="Buscar por revista, edição, ano ou capa" aria-label="Buscar revistas">
 <select id="dec" aria-label="Década"><option value="">Todas as décadas</option></select>
 <select id="so" aria-label="Ordenar"><option value="rec">Disponíveis primeiro</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option><option value="ano">Mais antigas</option><option value="anod">Mais recentes</option></select>
-<label class="chk"><input type="checkbox" id="so1"> Só disponíveis</label>
+<label class="chk"><input type="checkbox" id="so1"> Só disponíveis</label><label class="chk"><input type="checkbox" id="so2"> Pôster completo</label>
 </div>
 <div class="chips" id="chips" role="group" aria-label="Categorias"></div>
 <p class="count" id="count"></p>
 <div class="grid" id="grid"></div>
+
+<section class="blk2" id="envio" hidden><h2>Como enviamos</h2><p id="etx" style="white-space:pre-line;max-width:62ch;margin:0"></p></section>
 
 <section class="blk2" id="sobre" hidden><div class="sobre"><img id="sf" alt="" hidden><div><h2>Sobre o acervo</h2><p id="stx"></p></div></div></section>
 
@@ -179,8 +182,12 @@ function money(p){return "R$ "+(p%1?p.toFixed(2).replace(".",","):p)}
 function wa(n){return n?"https://wa.me/"+n:"#"}
 function th(u){return u.replace(/\.jpg$/,"_t.jpg")}
 function pic(u,alt,thumb){return '<img src="'+esc(thumb?th(u):u)+'" data-f="'+esc(u)+'" alt="'+esc(alt)+'" loading="lazy" onerror="if(this.dataset.f&&this.src!==this.dataset.f){this.src=this.dataset.f}">'}
-function mapR(r,i){var f=r.fotos||[];return {i:i,id:r.id,t:r.titulo,e:r.edicao||"",a:r.ano||"",c:r.categoria,m:r.capa_nome||"",s:r.estado||"",p:Number(r.preco),fotos:f,img:f[0],st:r.status,d:r.destaque,rar:r.raridade,n:Date.now()-new Date(r.criado_em)<6048e5,dec:r.ano?Math.floor(r.ano/10)*10:0,cor:r.categoria==="Sexy"?"#9F1239":"#1F2937"}}
+function mapR(r,i){var f=r.fotos||[];return {i:i,id:r.id,t:r.titulo,e:r.edicao||"",a:r.ano||"",c:r.categoria,m:r.capa_nome||"",s:r.estado||"",p:Number(r.preco),fotos:f,img:f[0],st:r.status,d:r.destaque,rar:r.raridade,po:r.poster||"",lo:r.lombada||"",ob:r.obs||"",tp:r.tipo||"",n:Date.now()-new Date(r.criado_em)<6048e5,dec:r.ano?Math.floor(r.ano/10)*10:0,cor:r.categoria==="Sexy"?"#9F1239":"#1F2937"}}
 function cond(s){var n=NIV[s];if(!n)return s?'<span>'+esc(s)+'</span>':'';return '<span class="dots" aria-hidden="true">'+"●".repeat(n)+'<i>'+"●".repeat(5-n)+'</i></span><span>Estado: '+esc(s)+'</span>'}
+var POS={completo:"Pôster completo",destacado:"Pôster destacado (retirado)",ausente:"Sem pôster nesta edição"},LOM={firme:"Lombada firme",fraca:"Lombada com cola ressecada ou solta"};
+function info(r){return [r.tp,POS[r.po],LOM[r.lo],r.ob].filter(Boolean).map(esc).join(" · ")}
+function reservar(ids){try{return fetch(SB+"/rest/v1/rpc/reservar_revistas",{method:"POST",headers:hdr(1),body:JSON.stringify({ids:ids.map(String)}),keepalive:true}).catch(function(){})}catch(e){}}
+function ld(){try{var s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify({"@context":"https://schema.org","@type":"ItemList",itemListElement:REVISTAS.filter(function(r){return r.st==='disponivel'}).map(function(r,j){return {"@type":"ListItem",position:j+1,item:{"@type":"Product",name:r.t+" "+r.e+" "+r.a,image:r.img,url:location.origin+"/?r="+r.id,offers:{"@type":"Offer",priceCurrency:"BRL",price:r.p,availability:"https://schema.org/InStock",itemCondition:"https://schema.org/UsedCondition"}}}})});document.head.appendChild(s)}catch(e){}}
 function byId(id){return REVISTAS.filter(function(r){return r.id===id})[0]}
 
 /* carrinho */
@@ -205,7 +212,7 @@ $('cb').onclick=function(){drawCart();$('cart').hidden=false;document.body.style
 $('cx').onclick=function(){$('cart').hidden=true;document.body.style.overflow=''};
 $('cl').onclick=function(e){var b=e.target.closest('[data-rm]');if(b){CART=CART.filter(function(x){return x!==b.dataset.rm});saveCart();drawCart();draw()}};
 $('cnome').oninput=$('ccep').oninput=drawCart;
-$('csend').onclick=function(){itens().forEach(function(r){track(r.id,'whatsapp')})};
+$('csend').onclick=function(){var its=itens();its.forEach(function(r){track(r.id,'whatsapp')});reservar(its.map(function(r){return r.id}))};
 $('cpix').onclick=function(e){if(e.target.id==='pkc'){try{navigator.clipboard.writeText(CFG.pix);e.target.textContent='Copiado'}catch(x){}}};
 
 /* catálogo */
@@ -216,10 +223,10 @@ function drawChips(){
   $('dec').innerHTML='<option value="">Todas as décadas</option>'+ds.map(function(d){return '<option value="'+d+'"'+(String(d)===cur?' selected':'')+'>Anos '+d+'</option>'}).join("");
 }
 function draw(){
-  var t=q.value.trim().toLowerCase(),o=so.value,dc=$('dec').value,so1=$('so1').checked;
+  var t=q.value.trim().toLowerCase(),o=so.value,dc=$('dec').value,so1=$('so1').checked,so2=$('so2').checked;
   var lista=REVISTAS.filter(function(r){
     var okc=cat==="Todas"||(cat==="Novidades"?r.n:cat==="Raridades"?r.rar:r.c===cat);
-    return okc&&(!dc||String(r.dec)===dc)&&(!so1||r.st==='disponivel')&&(r.t+" "+r.e+" "+r.a+" "+r.m).toLowerCase().indexOf(t)>-1;
+    return okc&&(!dc||String(r.dec)===dc)&&(!so1||r.st==='disponivel')&&(!so2||r.po==='completo')&&(r.t+" "+r.e+" "+r.a+" "+r.m).toLowerCase().indexOf(t)>-1;
   }).sort(function(a,b){
     if(o==="menor")return a.p-b.p||a.i-b.i;if(o==="maior")return b.p-a.p||a.i-b.i;
     if(o==="ano")return (a.a||9999)-(b.a||9999)||a.i-b.i;if(o==="anod")return (b.a||0)-(a.a||0)||a.i-b.i;
@@ -234,11 +241,11 @@ function draw(){
     var face=r.img?pic(r.img,'Capa da '+r.t+' '+r.e,1):'<div class="blk" style="background:'+r.cor+'"><div class="mast">'+esc(r.t)+'</div><div class="ed">'+esc(r.e)+' · '+r.a+'</div></div>';
     var stamp=!ok?'<span class="stamp st">'+(r.st==='vendida'?'Vendida':'Reservada')+'</span>':r.rar?'<span class="stamp">Raridade</span>':r.n?'<span class="stamp">Novidade</span>':r.d?'<span class="stamp">Destaque</span>':'';
     return '<article class="item'+(ok?'':' off')+'"><button class="cover" data-i="'+r.i+'" aria-label="Ver fotos de '+esc(r.t)+' '+esc(r.e)+'">'+face+'</button>'+stamp+
-    '<div class="plaque"><h2>'+esc(r.t)+' '+esc(r.e)+'</h2><span class="meta">'+(r.a||'')+(r.m?' · Capa: '+esc(r.m):'')+'</span><div class="cond">'+cond(r.s)+'</div>'+
+    '<div class="plaque"><h2>'+esc(r.t)+' '+esc(r.e)+'</h2><span class="meta">'+(r.a||'')+(r.m?' · Capa: '+esc(r.m):'')+'</span><div class="cond">'+cond(r.s)+'</div>'+(POS[r.po]?'<span class="meta">'+POS[r.po]+'</span>':'')+
     '<div class="foot"><span class="pr">'+money(r.p)+'</span>'+(ok?'<button class="btn" data-i="'+r.i+'">Comprar</button>':'<button class="btn" disabled>'+(r.st==='vendida'?'Vendida':'Reservada')+'</button>')+'</div></div></article>';
   }).join("");
 }
-function load(){
+function load(){reservar([]);
   count.textContent="Carregando…";grid.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>';
   Promise.all([api("revistas?select=*&order=destaque.desc,criado_em.desc"),api("config?select=*&id=eq.1")]).then(function(x){
     REVISTAS=x[0].map(mapR);CFG=x[1][0]||{};WHATSAPP=CFG.whatsapp||"";
@@ -246,8 +253,8 @@ function load(){
     $('wa').href=$('wa2').href=wa(WHATSAPP);
     $('ig').href=$('ig2').href="https://www.instagram.com/"+(CFG.instagram||"oacervo.reliquias")+"/";
     $('end').textContent=CFG.endereco||"";
-    if(CFG.sobre){$('sobre').hidden=false;$('stx').textContent=CFG.sobre;if(CFG.sobre_foto){$('sf').src=CFG.sobre_foto;$('sf').hidden=false}}
-    drawChips();draw();saveCart();
+    if(CFG.envio_info){$('envio').hidden=false;$('etx').textContent=CFG.envio_info}if(CFG.sobre){$('sobre').hidden=false;$('stx').textContent=CFG.sobre;if(CFG.sobre_foto){$('sf').src=CFG.sobre_foto;$('sf').hidden=false}}
+    drawChips();draw();saveCart();ld();
     var rid=new URLSearchParams(location.search).get('r'),r=rid&&byId(rid);if(r)openM(r.i,null);
   }).catch(function(){count.textContent="";grid.innerHTML='<p class="empty">Não foi possível carregar o catálogo agora. Tente novamente em instantes.</p>'});
 }
@@ -272,8 +279,8 @@ function openM(i,btn){
   cur=REVISTAS[i];lastBtn=btn;k=0;fotos=cur.fotos&&cur.fotos.length?cur.fotos:(cur.img?[cur.img]:[]);
   nav.hidden=thumbs.hidden=fotos.length<2;
   thumbs.innerHTML=fotos.map(function(f,j){return '<button data-k="'+j+'" aria-label="Ver foto '+(j+1)+'">'+pic(f,'',1)+'</button>'}).join("");
-  $('mt').textContent=cur.t+' '+cur.e;$('mm').textContent=(cur.a||'')+(cur.m?' · Capa: '+cur.m:'');$('mc').innerHTML=cond(cur.s);$('mp').textContent=money(cur.p);
-  var ok=cur.st==='disponivel';$('madd').hidden=$('mw').hidden=!ok;
+  $('mt').textContent=cur.t+' '+cur.e;$('mm').textContent=(cur.a||'')+(cur.m?' · Capa: '+cur.m:'');$('mc').innerHTML=cond(cur.s);$('md').innerHTML=info(cur);$('mp').textContent=money(cur.p);
+  var ok=cur.st==='disponivel';$('madd').hidden=$('mw').hidden=!ok;$('mav').hidden=ok;
   $('madd').textContent=CART.indexOf(cur.id)>-1?'Já está no carrinho. Ver carrinho':'Adicionar ao carrinho';
   $('mw').href=wa(WHATSAPP)+'?text='+encodeURIComponent('Olá! Quero comprar a revista '+cur.t+' '+cur.e+' ('+cur.a+'). Ainda está disponível?');
   $('mt2').textContent=ok?'':'Esta revista está '+(cur.st==='vendida'?'vendida.':'reservada.');
@@ -282,7 +289,7 @@ function openM(i,btn){
 }
 function closeM(){modal.hidden=true;document.body.style.overflow='';if(lastBtn)lastBtn.focus();try{history.replaceState(null,'',location.pathname)}catch(e){}}
 $('madd').onclick=function(){if(CART.indexOf(cur.id)>-1){closeM();$('cb').click();return}addCart(cur);this.textContent='Adicionado. Ver carrinho'};
-$('mw').onclick=function(){track(cur.id,'whatsapp')};
+$('mw').onclick=function(){track(cur.id,'whatsapp');reservar([cur.id])};$('mav').onclick=function(){closeM();$('pt').value='Quero ser avisado se aparecer: '+cur.t+' '+cur.e+(cur.a?' ('+cur.a+')':'');$('procura').scrollIntoView({behavior:'smooth'});$('pn').focus()};
 $('mcp').onclick=function(){var u=location.origin+location.pathname+'?r='+cur.id;try{navigator.clipboard.writeText(u);$('mt2').textContent='Link copiado.'}catch(e){$('mt2').textContent=u}};
 grid.addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(b)openM(+b.dataset.i,b)});
 thumbs.addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(b){k=+b.dataset.k;show()}});
@@ -308,7 +315,7 @@ var gate=$('gate'),okg=false;try{okg=sessionStorage.getItem('maior18')==='1'}cat
 gate.hidden=okg;
 $('yes').onclick=function(){gate.hidden=true;try{sessionStorage.setItem('maior18','1')}catch(e){}};
 $('no').onclick=function(){location.href='https://www.google.com'};
-q.addEventListener('input',draw);so.addEventListener('change',draw);$('dec').addEventListener('change',draw);$('so1').addEventListener('change',draw);
+q.addEventListener('input',draw);so.addEventListener('change',draw);$('dec').addEventListener('change',draw);$('so1').addEventListener('change',draw);$('so2').addEventListener('change',draw);
 load();
 </script>
 </body>
