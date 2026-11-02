@@ -44,6 +44,7 @@ button:disabled{opacity:.5}
 .err{color:var(--red)}
 .chk{display:flex;gap:8px;align-items:center;margin-top:12px;color:var(--ink)}
 .chk input{width:auto}
+@media(max-width:560px){.wrap{padding:10px}.row{grid-template-columns:1fr;gap:4px}.top{align-items:flex-start;flex-wrap:wrap}.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.item{align-items:flex-start}.item .acts{width:100%}.item .acts button,.item .acts select{flex:1 1 auto;min-width:0}.item .t{min-width:0;overflow-wrap:anywhere}}
 </style>
 </head>
 <body>
@@ -71,21 +72,21 @@ button:disabled{opacity:.5}
 <button id="t1" aria-pressed="true">Revistas</button><button id="t2" aria-pressed="false">Nova revista</button><button id="t3" aria-pressed="false">Loja</button><button id="t4" aria-pressed="false">Procuras</button>
 </div>
 
-<div id="p1"><div class="row"><input id="lq" type="search" placeholder="Buscar na lista" aria-label="Buscar"><select id="lf2" aria-label="Filtrar situação"><option value="">Todas</option><option value="disponivel">Disponíveis</option><option value="reservada">Reservadas</option><option value="vendida">Vendidas</option><option value="rascunho">Rascunhos</option></select></div><p class="msg" id="count"></p><div id="list"></div></div>
+<div id="p1"><div class="row"><input id="lq" type="search" placeholder="Buscar por título, categoria, edição..." aria-label="Buscar revistas por título, categoria, edição, ano ou capa"><select id="lf2" aria-label="Filtrar situação"><option value="">Todas</option><option value="disponivel">Disponíveis</option><option value="reservada">Reservadas</option><option value="vendida">Vendidas</option><option value="rascunho">Rascunhos</option></select></div><p class="msg" id="count"></p><div id="list"></div></div>
 
 <div id="p4" hidden><p class="msg" id="pcount"></p><div id="plist"></div></div>
 
 <form id="p2" class="card" hidden>
 <h2 id="ft">Nova revista</h2>
 <div class="row">
-<div><label for="f_cat">Revista</label><select id="f_cat"><option>Playboy</option><option>Sexy</option></select></div>
-<div><label for="f_ed">Edição</label><input id="f_ed" placeholder="nº 215"></div>
+<div><label for="f_titulo">Título da revista</label><input id="f_titulo" maxlength="160" placeholder="Ex.: Quatro Rodas, Playboy, Superinteressante" required></div>
+<div><label for="f_cat">Categoria</label><input id="f_cat" list="categorias-lista" maxlength="80" placeholder="Escolha ou digite uma categoria" required><datalist id="categorias-lista"><option value="Adulto"><option value="Automóveis"><option value="Ciência e conhecimento"><option value="Cinema e televisão"><option value="Esportes"><option value="Games e tecnologia"><option value="Música"><option value="Notícias e atualidades"><option value="Quadrinhos"><option value="Variedades"><option value="Outras"></datalist></div>
 </div>
+<div class="row"><div><label for="f_ed">Edição</label><input id="f_ed" placeholder="nº 215"></div><div><label for="f_ano">Ano de publicação</label><input id="f_ano" type="number" min="1900" max="2100"></div></div>
 <div class="row">
-<div><label for="f_ano">Ano</label><input id="f_ano" type="number" min="1950" max="2100"></div>
 <div><label for="f_preco">Preço (R$)</label><input id="f_preco" type="number" step="0.01" min="0" required></div>
+<div><label for="f_capa">Quem está na capa (opcional)</label><input id="f_capa"></div>
 </div>
-<label for="f_capa">Quem está na capa</label><input id="f_capa">
 <div class="row"><div><label for="f_po">Pôster</label><select id="f_po"><option value="">Não informado</option><option value="completo">Completo</option><option value="destacado">Destacado (retirado)</option><option value="ausente">Sem pôster na edição</option></select></div>
 <div><label for="f_lo">Lombada</label><select id="f_lo"><option value="">Não informado</option><option value="firme">Firme</option><option value="fraca">Cola ressecada / solta</option></select></div></div>
 <div class="row"><div><label for="f_tp">Tipo</label><select id="f_tp"><option value="">Regular</option><option>Edição especial</option><option>Capa alternativa</option><option>Suplemento</option></select></div>
@@ -182,10 +183,10 @@ async function loadList0(){
   await loadStats();
   var r=await sb.from("revistas").select("*").order("criado_em",{ascending:false});
   if(r.error){say("count","Erro ao carregar: "+r.error.message,1);return}
-  list=r.data;say("count",list.length+(list.length===1?" revista":" revistas")+" cadastradas");
+  list=r.data;refreshCategories();say("count",list.length+(list.length===1?" revista":" revistas")+" cadastradas");
   $("list").innerHTML=list.map(function(m,i){
     var f=(m.fotos||[])[0];
-    return '<div class="card item" data-s="'+m.status+'" data-q="'+esc((m.titulo+" "+(m.edicao||"")+" "+(m.ano||"")+" "+(m.capa_nome||"")).toLowerCase())+'">'+(f?'<img src="'+esc(f)+'" alt="">':'<div class="ph">sem foto</div>')+
+    return '<div class="card item" data-s="'+m.status+'" data-q="'+esc((m.titulo+" "+(m.categoria||"")+" "+(m.edicao||"")+" "+(m.ano||"")+" "+(m.capa_nome||"")+" "+(m.tipo||"")+" "+(m.obs||"")).toLowerCase())+'">'+(f?'<img src="'+esc(f)+'" alt="">':'<div class="ph">sem foto</div>')+
     '<div class="t"><b>'+esc(m.titulo)+' '+esc(m.edicao)+(m.destaque?' ★':'')+'</b><span>'+esc(m.ano)+' · '+esc(m.estado)+' · '+money(m.preco)+' · '+(m.fotos||[]).length+' foto(s)</span><br><span>'+statTxt(m.id)+'</span>'+
     '<div class="acts"><select data-st="'+m.id+'" aria-label="Situação">'+
     ["disponivel","reservada","vendida","rascunho"].map(function(x){return '<option value="'+x+'"'+(m.status===x?' selected':'')+'>'+{disponivel:"Disponível",reservada:"Reservada",vendida:"Vendida",rascunho:"Rascunho"}[x]+'</option>'}).join("")+
@@ -214,10 +215,11 @@ $("list").addEventListener("click",async function(e){
 });
 function pathOf(u){var i=u.indexOf("/revistas/");return i<0?null:decodeURIComponent(u.slice(i+10))}
 
-function newForm(){editId=null;fotos=[];orig=[];$("p2").reset();$("ft").textContent="Nova revista";say("fm","");drawFotos()}
+function refreshCategories(extra){var known=["Adulto","Automóveis","Ciência e conhecimento","Cinema e televisão","Esportes","Games e tecnologia","Música","Notícias e atualidades","Quadrinhos","Variedades","Outras"];list.forEach(function(m){if(m.categoria&&known.map(function(x){return x.toLowerCase()}).indexOf(m.categoria.toLowerCase())<0)known.push(m.categoria)});if(extra&&known.map(function(x){return x.toLowerCase()}).indexOf(extra.toLowerCase())<0)known.push(extra);$("categorias-lista").innerHTML=known.sort(function(a,b){return a.localeCompare(b,"pt-BR")}).map(function(x){return '<option value="'+esc(x)+'">' }).join("");}
+function newForm(){editId=null;fotos=[];orig=[];$("p2").reset();$("ft").textContent="Nova revista";say("fm","");drawFotos();refreshCategories()}
 function fill(m){
   editId=m.id;fotos=(m.fotos||[]).slice();$("ft").textContent="Editar revista";say("fm","");
-  $("f_cat").value=m.categoria;$("f_ed").value=m.edicao||"";$("f_ano").value=m.ano||"";$("f_preco").value=m.preco;
+  $("f_titulo").value=m.titulo||"";$("f_cat").value=m.categoria||"";$("f_ed").value=m.edicao||"";$("f_ano").value=m.ano||"";$("f_preco").value=m.preco;refreshCategories();
   $("f_capa").value=m.capa_nome||"";$("f_est").value=m.estado||"Bom";$("f_st").value=m.status;$("f_dest").checked=m.destaque;$("f_rar").checked=m.raridade;$("f_po").value=m.poster||"";$("f_lo").value=m.lombada||"";$("f_tp").value=m.tipo||"";$("f_ob").value=m.obs||"";orig=(m.fotos||[]).slice();drawFotos();
 }
 function drawFotos(){
@@ -261,11 +263,12 @@ function apagar(us,id){var o=[].concat.apply([],list.filter(function(x){return x
 $("cancel").onclick=function(){apagar(fotos.filter(function(u){return orig.indexOf(u)<0}),editId);newForm();tab(1)};
 $("p2").onsubmit=async function(e){
   e.preventDefault();$("save").disabled=true;say("fm","Salvando…");
-  var cat=$("f_cat").value,row={titulo:cat,categoria:cat,edicao:$("f_ed").value.trim(),ano:$("f_ano").value?+$("f_ano").value:null,
+  var titulo=$("f_titulo").value.trim(),cat=$("f_cat").value.trim(),row={titulo:titulo,categoria:cat,edicao:$("f_ed").value.trim(),ano:$("f_ano").value?+$("f_ano").value:null,
     capa_nome:$("f_capa").value.trim(),estado:$("f_est").value,preco:+$("f_preco").value,status:$("f_st").value,destaque:$("f_dest").checked,raridade:$("f_rar").checked,fotos:fotos,poster:$("f_po").value||null,lombada:$("f_lo").value||null,tipo:$("f_tp").value||null,obs:$("f_ob").value.trim()||null};
   var r=editId?await sb.from("revistas").update(row).eq("id",editId):await sb.from("revistas").insert(row);
   $("save").disabled=false;
   if(r.error){say("fm","Erro ao salvar: "+r.error.message,1);return}
+  if(list.every(function(m){return (m.categoria||"").toLowerCase()!==cat.toLowerCase()}))refreshCategories(cat);
   var rem=orig.filter(function(u){return fotos.indexOf(u)<0}),eid=editId;newForm();tab(1);loadList();say("count","Revista salva.");if(rem.length)apagar(rem,eid);
 };
 

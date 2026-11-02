@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>O Acervo Relíquias</title>
-<meta name="description" content="Revistas Playboy e Sexy para colecionadores. Veja as fotos do estado de cada exemplar e combine a compra pelo WhatsApp.">
+<meta name="description" content="Revistas e publicações de diferentes temas para colecionadores. Confira fotos, estado de conservação e combine a compra pelo WhatsApp.">
 <meta property="og:title" content="O Acervo Relíquias">
-<meta property="og:description" content="Revistas Playboy e Sexy para colecionadores, com fotos do estado de cada exemplar.">
-<meta property="og:type" content="website"><meta name="theme-color" content="#15100B"><link rel="canonical" href="https://acervoreliquias.vercel.app/">
+<meta property="og:description" content="Acervo de revistas e publicações de diferentes temas para colecionadores, com fotos do estado de cada exemplar.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://acervoreliquias.vercel.app/"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#15100B"><link rel="canonical" href="https://acervoreliquias.vercel.app/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,900;1,6..96,600&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -63,7 +63,40 @@ section.blk2{border-top:1px solid var(--line);padding:30px 0}
 .blk2 h2{font-family:'Bodoni Moda',serif;font-size:1.8rem;margin:0 0 10px}
 .sobre{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:24px;align-items:start}
 .sobre img{width:100%;border:1px solid var(--line)}.sobre p{white-space:pre-line;max-width:62ch;margin:0}
-@media (max-width:700px){.sobre{grid-template-columns:1fr}}
+@media (max-width:700px){
+.sobre{grid-template-columns:1fr}
+.wrap{padding-left:14px;padding-right:14px}
+header{padding-top:20px}
+.strip .wrap{justify-content:center;text-align:center}
+.strip .wrap>span:last-child{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.strip a,.cartbtn{margin-left:0}
+.how{grid-template-columns:1fr;gap:8px;margin-top:18px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding-top:14px}
+.tools input[type=search]{grid-column:1/-1;width:100%;min-width:0}
+.tools select{width:100%;min-width:0}
+.tools .chk{align-self:center}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+.plaque{padding:10px;gap:4px}
+.plaque h2{font-size:clamp(1rem,4vw,1.25rem);overflow-wrap:anywhere}
+.meta{font-size:.8rem}
+.cond{font-size:.78rem;flex-wrap:wrap}
+.foot{align-items:flex-start;flex-direction:column;gap:8px;padding-top:8px}
+.pr{font-size:1.25rem}
+.foot .btn{width:100%;padding:9px 8px}
+.stamp{top:8px;font-size:.7rem;padding:3px 8px}
+.box{padding:12px}
+.modal{padding:10px}
+.stage{max-height:58vh}
+}
+@media (max-width:360px){
+.grid{grid-template-columns:1fr}
+.tools{grid-template-columns:1fr}
+.tools input[type=search]{grid-column:auto}
+}
+@media (min-width:701px) and (max-width:900px){
+.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px}
+.wrap{padding-left:18px;padding-right:18px}
+}
 .pform{display:grid;gap:10px;max-width:560px}.hp{position:absolute;left:-9999px}
 footer{border-top:3px double var(--ink);padding:26px 0 44px;color:var(--mut);font-size:.93rem;text-align:center}
 footer .row,.gate .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
@@ -90,11 +123,25 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 .hint{color:var(--mut);font-size:.88rem;margin:6px 0}
 .toast{color:var(--tag);font-size:.9rem;min-height:1.3em;margin:6px 0 0}
 .det{font-size:.85rem;color:var(--mut);margin:8px 0}.det summary{cursor:pointer;color:var(--ink)}.det li{margin:3px 0}
+
+/* Ações com ícones */
+.head-actions{display:flex;align-items:center;justify-content:center;gap:10px 20px;flex-wrap:wrap}
+.icon-link,.cartbtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;color:var(--ink);text-decoration:none;font:600 .92rem Figtree,sans-serif;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.025);padding:8px 13px;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.icon-link:hover,.cartbtn:hover{background:rgba(242,163,58,.12);border-color:var(--tag);transform:translateY(-1px)}
+.icon-link svg,.cartbtn svg,.social-btn svg{width:19px;height:19px;flex:0 0 19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icon-link .solid,.social-btn .solid{fill:currentColor;stroke:none}
+.cartbtn{margin:0;border-bottom:1px solid var(--line)}
+.cartbtn b{display:inline-grid;place-items:center;min-width:21px;height:21px;padding:0 5px;border-radius:99px;background:var(--tag);color:var(--tagink);font-size:.78rem}
+.social-actions{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 18px}
+.social-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none}
+.whatsapp-link:hover{border-color:#39b86a}
+.instagram-link:hover{border-color:#d18b68}
+@media(max-width:560px){.strip .wrap{justify-content:center;text-align:center}.head-actions{width:100%;gap:8px}.icon-link,.cartbtn{padding:8px 10px;font-size:.84rem}.social-actions{flex-direction:column}.social-actions .btn{width:100%}}
 </style>
 </head>
 <body>
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gt" hidden>
-<div><h2 id="gt">Conteúdo para maiores de 18 anos</h2><p>Esta loja vende revistas adultas. Confirme que você tem 18 anos ou mais para entrar.</p>
+<div><h2 id="gt">Confirmação de idade</h2><p>O acervo pode incluir publicações destinadas ao público adulto. Confirme que você tem 18 anos ou mais para entrar.</p>
 <div class="row"><button class="btn" id="yes">Tenho 18 anos ou mais</button><button class="btn alt" id="no">Sair</button></div></div></div>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt" hidden><div class="box">
@@ -118,7 +165,7 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 <label for="ccep" class="hint">CEP para o envio (opcional)</label><input id="ccep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000">
 <div id="cpix" class="hint"></div>
 <a class="btn" id="csend" target="_blank" rel="noopener">Enviar pedido pelo WhatsApp</a>
-<p class="hint">O pedido vai como mensagem. O pagamento e o envio são combinados na conversa.</p>
+<p class="toast" id="cartmsg" role="status" aria-live="polite"></p><p class="hint">O pedido vai como mensagem. O pagamento e o envio são combinados na conversa.</p>
 </div></div>
 
 <div class="modal" id="termos" role="dialog" aria-modal="true" aria-labelledby="tt" hidden><div class="box">
@@ -132,7 +179,11 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 
 <header>
 <div class="wrap"><h1 id="nome">O Acervo Relíquias</h1></div>
-<div class="strip"><div class="wrap"><span>Playboy e Sexy para colecionadores</span><span><a id="ig" target="_blank" rel="noopener">Instagram</a><a id="wa" target="_blank" rel="noopener">WhatsApp</a><button class="cartbtn" id="cb">Carrinho (<span id="cn">0</span>)</button></span></div></div>
+<div class="strip"><div class="wrap"><span>Revistas e publicações para colecionadores</span><nav class="head-actions" aria-label="Links e ações">
+<a class="icon-link instagram-link" id="ig" target="_blank" rel="noopener" aria-label="Abrir Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="solid" cx="17.5" cy="6.5" r="1"/></svg><span>Instagram</span></a>
+<a class="icon-link whatsapp-link" id="wa" target="_blank" rel="noopener" aria-label="Conversar pelo WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 11.8a8.2 8.2 0 0 1-12.1 7.1L3 20l1.2-4.9A8.2 8.2 0 1 1 20.2 11.8Z"/><path d="M8.5 8.1c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2 1.9.3.2.5.2.7-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .3-.2 1.1-.7 1.5-.5.4-1.1.6-1.8.4-1-.2-2.2-.8-3.4-1.9-1-.9-1.7-2.1-2-3-.3-.9 0-1.8.3-2.2Z"/></svg><span>WhatsApp</span></a>
+<button class="cartbtn" id="cb" aria-label="Abrir carrinho de compras"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.2a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/></svg><span>Carrinho</span><b id="cn">0</b></button>
+</nav></div></div>
 </header>
 
 <main class="wrap">
@@ -164,7 +215,10 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 </main>
 
 <footer><div class="wrap">
-<div class="row"><a class="btn" id="wa2" target="_blank" rel="noopener">Falar no WhatsApp</a><a class="btn alt" id="ig2" target="_blank" rel="noopener">Ver no Instagram</a></div>
+<div class="social-actions">
+<a class="btn social-btn whatsapp-link" id="wa2" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 11.8a8.2 8.2 0 0 1-12.1 7.1L3 20l1.2-4.9A8.2 8.2 0 1 1 20.2 11.8Z"/><path d="M8.5 8.1c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2 1.9.3.2.5.2.7-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .3-.2 1.1-.7 1.5-.5.4-1.1.6-1.8.4-1-.2-2.2-.8-3.4-1.9-1-.9-1.7-2.1-2-3-.3-.9 0-1.8.3-2.2Z"/></svg>Falar no WhatsApp</a>
+<a class="btn alt social-btn instagram-link" id="ig2" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="solid" cx="17.5" cy="6.5" r="1"/></svg>Ver no Instagram</a>
+</div>
 Envio para todo o Brasil. <span id="end"></span><br><button class="l" id="tl">Termos e privacidade</button>
 </div></footer>
 
@@ -186,7 +240,19 @@ function mapR(r,i){var f=r.fotos||[];return {i:i,id:r.id,t:r.titulo,e:r.edicao||
 function cond(s){var n=NIV[s];if(!n)return s?'<span>'+esc(s)+'</span>':'';return '<span class="dots" aria-hidden="true">'+"●".repeat(n)+'<i>'+"●".repeat(5-n)+'</i></span><span>Estado: '+esc(s)+'</span>'}
 var POS={completo:"Pôster completo",destacado:"Pôster destacado (retirado)",ausente:"Sem pôster nesta edição"},LOM={firme:"Lombada firme",fraca:"Lombada com cola ressecada ou solta"};
 function info(r){return [r.tp,POS[r.po],LOM[r.lo],r.ob].filter(Boolean).map(esc).join(" · ")}
-function reservar(ids){try{return fetch(SB+"/rest/v1/rpc/reservar_revistas",{method:"POST",headers:hdr(1),body:JSON.stringify({ids:ids.map(String)}),keepalive:true}).catch(function(){})}catch(e){}}
+async function reservar(ids){
+  try{
+    var r=await fetch(SB+"/rest/v1/rpc/reservar_revistas",{method:"POST",headers:hdr(1),body:JSON.stringify({ids:ids.map(String)})});
+    if(!r.ok)return {ok:false,message:"Não foi possível solicitar a reserva. Atualize a página e tente novamente."};
+    if(!ids.length)return {ok:true};
+    var params=new URLSearchParams({select:"id,status",id:"in.("+ids.map(String).join(",")+")"});
+    var check=await fetch(SB+"/rest/v1/revistas?"+params.toString(),{headers:hdr()});
+    if(!check.ok)return {ok:false,message:"Não foi possível confirmar a situação dos exemplares. Tente novamente."};
+    var rows=await check.json(),confirmed=ids.every(function(id){var item=rows.filter(function(x){return x.id===id})[0];return item&&(item.status==="reservada"||item.status==="reservado")});
+    if(!confirmed)return {ok:false,message:"Um ou mais exemplares não estão mais disponíveis. Atualize o catálogo antes de continuar."};
+    return {ok:true};
+  }catch(e){return {ok:false,message:"Falha de conexão ao solicitar a reserva. Verifique sua internet e tente novamente."}}
+}
 function ld(){try{var s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify({"@context":"https://schema.org","@type":"ItemList",itemListElement:REVISTAS.filter(function(r){return r.st==='disponivel'}).map(function(r,j){return {"@type":"ListItem",position:j+1,item:{"@type":"Product",name:r.t+" "+r.e+" "+r.a,image:r.img,url:location.origin+"/?r="+r.id,offers:{"@type":"Offer",priceCurrency:"BRL",price:r.p,availability:"https://schema.org/InStock",itemCondition:"https://schema.org/UsedCondition"}}}})});document.head.appendChild(s)}catch(e){}}
 function byId(id){return REVISTAS.filter(function(r){return r.id===id})[0]}
 
@@ -194,7 +260,7 @@ function byId(id){return REVISTAS.filter(function(r){return r.id===id})[0]}
 try{CART=JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){}
 function saveCart(){try{localStorage.setItem('cart',JSON.stringify(CART))}catch(e){}$('cn').textContent=itens().length}
 function itens(){return CART.map(byId).filter(function(r){return r&&r.st==='disponivel'})}
-function addCart(r){if(CART.indexOf(r.id)<0){CART.push(r.id);track(r.id,'carrinho')}saveCart()}
+function addCart(r){if(CART.indexOf(r.id)<0){if(CART.length>=8)return false;CART.push(r.id);track(r.id,'carrinho')}saveCart();return true}
 function frete(sub){
   var f=CFG.frete_fixo,g=CFG.frete_gratis_acima;
   if(f==null)return null;f=Number(f);if(g!=null&&sub>=Number(g))return 0;return f;
@@ -212,7 +278,20 @@ $('cb').onclick=function(){drawCart();$('cart').hidden=false;document.body.style
 $('cx').onclick=function(){$('cart').hidden=true;document.body.style.overflow=''};
 $('cl').onclick=function(e){var b=e.target.closest('[data-rm]');if(b){CART=CART.filter(function(x){return x!==b.dataset.rm});saveCart();drawCart();draw()}};
 $('cnome').oninput=$('ccep').oninput=drawCart;
-$('csend').onclick=function(){var its=itens();its.forEach(function(r){track(r.id,'whatsapp')});reservar(its.map(function(r){return r.id}))};
+$('csend').onclick=async function(e){
+  e.preventDefault();
+  var its=itens(),ids=its.map(function(r){return r.id}),a=this;
+  if(!ids.length)return;
+  a.style.pointerEvents="none";a.textContent="Confirmando disponibilidade…";
+  var result=await reservar(ids);
+  a.style.pointerEvents="";
+  if(!result.ok){a.textContent="Tentar novamente pelo WhatsApp";$('cartmsg').textContent=result.message;return}
+  its.forEach(function(r){track(r.id,'whatsapp')});
+  $('cartmsg').textContent="Exemplares reservados por até 6 horas. Abrindo o WhatsApp…";
+  var sub=its.reduce(function(v,r){return v+r.p},0),fr=frete(sub);
+  var msg="Olá! Quero comprar:\n"+its.map(function(r){return "- "+r.t+" "+r.e+" ("+r.a+"): "+money(r.p)}).join("\n")+"\nSubtotal: "+money(sub)+"\nFrete: "+(fr==null?"a combinar":fr===0?"grátis":money(fr))+(($('cnome').value)?"\nNome: "+$('cnome').value:"")+(($('ccep').value)?"\nCEP: "+$('ccep').value:"");
+  location.href=wa(WHATSAPP)+"?text="+encodeURIComponent(msg);
+};
 $('cpix').onclick=function(e){if(e.target.id==='pkc'){try{navigator.clipboard.writeText(CFG.pix);e.target.textContent='Copiado'}catch(x){}}};
 
 /* catálogo */
@@ -226,7 +305,7 @@ function draw(){
   var t=q.value.trim().toLowerCase(),o=so.value,dc=$('dec').value,so1=$('so1').checked,so2=$('so2').checked;
   var lista=REVISTAS.filter(function(r){
     var okc=cat==="Todas"||(cat==="Novidades"?r.n:cat==="Raridades"?r.rar:r.c===cat);
-    return okc&&(!dc||String(r.dec)===dc)&&(!so1||r.st==='disponivel')&&(!so2||r.po==='completo')&&(r.t+" "+r.e+" "+r.a+" "+r.m).toLowerCase().indexOf(t)>-1;
+    return okc&&(!dc||String(r.dec)===dc)&&(!so1||r.st==='disponivel')&&(!so2||r.po==='completo')&&(r.t+" "+r.c+" "+r.e+" "+r.a+" "+r.m+" "+r.tp+" "+r.ob).toLowerCase().indexOf(t)>-1;
   }).sort(function(a,b){
     if(o==="menor")return a.p-b.p||a.i-b.i;if(o==="maior")return b.p-a.p||a.i-b.i;
     if(o==="ano")return (a.a||9999)-(b.a||9999)||a.i-b.i;if(o==="anod")return (b.a||0)-(a.a||0)||a.i-b.i;
@@ -248,7 +327,7 @@ function draw(){
 function load(){reservar([]);
   count.textContent="Carregando…";grid.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>';
   Promise.all([api("revistas?select=*&order=destaque.desc,criado_em.desc"),api("config?select=*&id=eq.1")]).then(function(x){
-    REVISTAS=x[0].map(mapR);CFG=x[1][0]||{};WHATSAPP=CFG.whatsapp||"";
+    REVISTAS=x[0].map(mapR).filter(function(r){return r.st!=="rascunho"});REVISTAS.forEach(function(r,i){r.i=i});CFG=x[1][0]||{};WHATSAPP=CFG.whatsapp||"";
     if(CFG.nome){document.title=CFG.nome;$('nome').textContent=CFG.nome}
     $('wa').href=$('wa2').href=wa(WHATSAPP);
     $('ig').href=$('ig2').href="https://www.instagram.com/"+(CFG.instagram||"oacervo.reliquias")+"/";
@@ -288,8 +367,15 @@ function openM(i,btn){
   try{history.replaceState(null,'','?r='+cur.id)}catch(e){}
 }
 function closeM(){modal.hidden=true;document.body.style.overflow='';if(lastBtn)lastBtn.focus();try{history.replaceState(null,'',location.pathname)}catch(e){}}
-$('madd').onclick=function(){if(CART.indexOf(cur.id)>-1){closeM();$('cb').click();return}addCart(cur);this.textContent='Adicionado. Ver carrinho'};
-$('mw').onclick=function(){track(cur.id,'whatsapp');reservar([cur.id])};$('mav').onclick=function(){closeM();$('pt').value='Quero ser avisado se aparecer: '+cur.t+' '+cur.e+(cur.a?' ('+cur.a+')':'');$('procura').scrollIntoView({behavior:'smooth'});$('pn').focus()};
+$('madd').onclick=function(){if(CART.indexOf(cur.id)>-1){closeM();$('cb').click();return}if(!addCart(cur)){$('mt2').textContent='O carrinho aceita no máximo 8 exemplares por pedido.';return}this.textContent='Adicionado. Ver carrinho'};
+$('mw').onclick=async function(e){
+  e.preventDefault();
+  var a=this;a.style.pointerEvents="none";$('mt2').textContent="Confirmando disponibilidade…";
+  var result=await reservar([cur.id]);a.style.pointerEvents="";
+  if(!result.ok){$('mt2').textContent=result.message;return}
+  track(cur.id,'whatsapp');$('mt2').textContent="Exemplar reservado por até 6 horas. Abrindo o WhatsApp…";
+  location.href=a.href;
+};$('mav').onclick=function(){closeM();$('pt').value='Quero ser avisado se aparecer: '+cur.t+' '+cur.e+(cur.a?' ('+cur.a+')':'');$('procura').scrollIntoView({behavior:'smooth'});$('pn').focus()};
 $('mcp').onclick=function(){var u=location.origin+location.pathname+'?r='+cur.id;try{navigator.clipboard.writeText(u);$('mt2').textContent='Link copiado.'}catch(e){$('mt2').textContent=u}};
 grid.addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(b)openM(+b.dataset.i,b)});
 thumbs.addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(b){k=+b.dataset.k;show()}});
