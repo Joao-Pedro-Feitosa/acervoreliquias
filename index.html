@@ -391,11 +391,42 @@ document.addEventListener('keydown',function(e){
 });
 
 /* lista de procura */
-$('pf').onsubmit=function(e){
-  e.preventDefault();if($('hp').value)return;$('pm').textContent='Enviando…';
-  post("procuras",{nome:$('pn').value.trim(),contato:$('pc').value.trim(),texto:$('pt').value.trim()}).then(function(r){
-    if(!r.ok)throw 0;$('pf').reset();$('pm').textContent='Recebido. Avisamos se aparecer.';
-  }).catch(function(){$('pm').textContent='Não foi possível enviar agora. Chame no WhatsApp.'});
+$('pf').onsubmit=async function(e){
+  e.preventDefault();
+  if($('hp').value)return;
+  var msg=$('pm'),btn=this.querySelector('button[type="submit"]');
+  if(btn.disabled)return;
+  btn.disabled=true;msg.textContent='Enviando…';
+  try{
+    var response=await fetch(SB+"/rest/v1/procuras",{
+      method:"POST",
+      headers:Object.assign(hdr(1),{Prefer:"return=minimal"}),
+      body:JSON.stringify({
+        nome:$('pn').value.trim(),
+        contato:$('pc').value.trim(),
+        texto:$('pt').value.trim()
+      })
+    });
+    if(!response.ok){
+      var detail="";
+      try{var data=await response.json();detail=data.message||data.details||data.hint||""}catch(x){}
+      console.error("Erro ao enviar pedido de procura:",response.status,detail);
+      if(response.status===401||response.status===403){
+        throw new Error("O banco de dados bloqueou o envio (permissão/RLS). É necessário ajustar a política de INSERT da tabela procuras no Supabase.");
+      }
+      if(response.status===400||response.status===422){
+        throw new Error("Os dados enviados não foram aceitos pelo banco. Verifique as colunas obrigatórias da tabela procuras."+(detail?" Detalhe: "+detail:""));
+      }
+      throw new Error("O servidor retornou erro "+response.status+" ao salvar o pedido."+(detail?" "+detail:""));
+    }
+    this.reset();
+    msg.textContent='Recebido. Avisamos se aparecer.';
+  }catch(err){
+    console.error(err);
+    msg.textContent=err.message||'Não foi possível enviar agora. Chame no WhatsApp.';
+  }finally{
+    btn.disabled=false;
+  }
 };
 
 /* aviso de maioridade */
