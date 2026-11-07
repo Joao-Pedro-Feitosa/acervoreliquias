@@ -11,16 +11,16 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,900;1,6..96,600&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#15100B;--ink:#F1E6D6;--mut:#A8977F;--line:#3A2C1F;--card:#211810;--tag:#F2A33A;--tagink:#1A120A;--red:#E8793A;
+:root{color-scheme:dark;--wood:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .09' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .11 0 0 0 0 .05 0 0 0 -1.5 1.15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%236b3d1c'/%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");--bg:#15100B;--ink:#F1E6D6;--mut:#A8977F;--line:#3A2C1F;--card:#211810;--tag:#F2A33A;--tagink:#1A120A;--red:#E8793A;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{margin:0;color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.5;background-color:var(--bg);background-image:radial-gradient(900px 420px at 50% -90px,rgba(242,163,58,.16),transparent 70%);background-repeat:no-repeat}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-header{border-top:6px solid var(--tag);padding-top:26px;text-align:center}
-h1{font-family:'Bodoni Moda',Georgia,serif;font-weight:900;font-size:clamp(2.4rem,8.5vw,5rem);line-height:1;margin:0 0 20px}
-.strip{border-top:1px solid var(--ink);border-bottom:3px double var(--ink);padding:9px 0;font-size:.92rem;color:var(--mut)}
+header{border-top:6px solid var(--tag);padding-top:34px;text-align:center;background:linear-gradient(180deg,rgba(21,16,11,.25),rgba(21,16,11,.7) 85%,var(--bg)),url(mesa.jpg),var(--wood);background-size:cover;background-position:center}
+h1{font-family:'Bodoni Moda',Georgia,serif;font-weight:900;font-size:clamp(2.4rem,8.5vw,5rem);line-height:1;margin:0 0 20px;text-shadow:0 3px 18px rgba(0,0,0,.85)}
+.strip{border-top:1px solid var(--ink);border-bottom:3px double var(--ink);padding:9px 0;font-size:.92rem;color:#D3C2A9;background:rgba(21,16,11,.82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .strip .wrap{display:flex;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;align-items:center}
 .strip a,.cartbtn{color:var(--ink);text-decoration:none;font:600 .92rem Figtree,sans-serif;margin-left:16px;border:0;border-bottom:1px solid var(--tag);background:none;padding:0;cursor:pointer}
 .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 24px;list-style:none;margin:22px 0 6px;padding:0;color:var(--mut);font-size:.93rem}
@@ -98,7 +98,7 @@ header{padding-top:20px}
 .wrap{padding-left:18px;padding-right:18px}
 }
 .pform{display:grid;gap:10px;max-width:560px}.hp{position:absolute;left:-9999px}
-footer{border-top:3px double var(--ink);padding:26px 0 44px;color:var(--mut);font-size:.93rem;text-align:center}
+footer{background:linear-gradient(rgba(21,16,11,.84),rgba(21,16,11,.92)),url(mesa.jpg),var(--wood);background-size:cover;background-position:center;border-top:3px double var(--ink);padding:26px 0 44px;color:var(--mut);font-size:.93rem;text-align:center}
 footer .row,.gate .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
 footer button.l{background:none;border:0;color:var(--ink);text-decoration:underline;cursor:pointer;font:inherit}
 .gate{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px;text-align:center}
@@ -139,6 +139,13 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 .whatsapp-link:hover{border-color:#39b86a}
 .instagram-link:hover{border-color:#d18b68}
 @media(max-width:560px){.strip .wrap{justify-content:center;text-align:center}.head-actions{width:100%;gap:12px}.head-actions .icon-link,.head-actions .cartbtn{min-height:46px;padding:10px 14px;font-size:.84rem}.social-actions{flex-direction:column;align-items:stretch}.social-actions .btn.social-btn,.social-actions a.social-btn{width:100%;min-width:0;min-height:50px;padding:13px 18px!important}}
+.mesa{display:flex;justify-content:center;align-items:flex-end;padding:6px 0 30px}
+.pc{width:clamp(96px,22vw,150px);aspect-ratio:3/4;border:0;padding:0;margin:0 -12px;background:#000;overflow:hidden;cursor:pointer;box-shadow:0 16px 24px -8px rgba(0,0,0,.85),0 2px 5px rgba(0,0,0,.6);transform:rotate(var(--r)) translateY(var(--y));transition:transform .2s}
+.pc:hover,.pc:focus-visible{transform:rotate(0) translateY(-10px) scale(1.05);z-index:3}
+.pc img{width:100%;height:100%;object-fit:cover;display:block}
+.mesa.blur .pc img{filter:blur(14px)}
+@media (max-width:560px){.pc:nth-child(n+4){display:none}}
+@media (prefers-reduced-motion:reduce){.pc{transition:none}}
 </style>
 </head>
 <body>
@@ -161,13 +168,16 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 <div class="modal" id="cart" role="dialog" aria-modal="true" aria-labelledby="ct" hidden><div class="box">
 <button class="x" id="cx" aria-label="Fechar">×</button>
 <h2 id="ct">Seu carrinho</h2>
-<div id="cl"></div>
+<div id="cform"><div id="cl"></div>
 <div id="cs"></div>
 <label for="cnome" class="hint">Seu nome</label><input id="cnome" autocomplete="name">
-<label for="ccep" class="hint">CEP para o envio (opcional)</label><input id="ccep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000">
+<label for="cemail" class="hint">E-mail</label><input id="cemail" type="email" autocomplete="email">
+<label for="ctel" class="hint">Telefone / WhatsApp</label><input id="ctel" type="tel" autocomplete="tel">
+<label for="ccep" class="hint">CEP</label><input id="ccep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000">
+<input id="crua" placeholder="Rua" autocomplete="address-line1"><input id="cnum" placeholder="Número"><input id="cbairro" placeholder="Bairro"><input id="ccid" placeholder="Cidade"><input id="cuf" placeholder="UF" maxlength="2">
 <div id="cpix" class="hint"></div>
-<a class="btn" id="csend" target="_blank" rel="noopener">Enviar pedido pelo WhatsApp</a>
-<p class="toast" id="cartmsg" role="status" aria-live="polite"></p><p class="hint">O pedido vai como mensagem. O pagamento e o envio são combinados na conversa.</p>
+<button class="btn" id="cpay" hidden>Pagar com Pix</button><p class="toast" id="cmsg" role="status"></p><a class="btn alt" id="csend" target="_blank" rel="noopener">Prefiro combinar pelo WhatsApp</a>
+<p class="toast" id="cartmsg" role="status" aria-live="polite"></p><p class="hint">No Pix, o pagamento é confirmado na hora e as revistas ficam reservadas por 30 minutos.</p></div><div id="pixv" hidden></div>
 </div></div>
 
 <div class="modal" id="termos" role="dialog" aria-modal="true" aria-labelledby="tt" hidden><div class="box">
@@ -181,6 +191,7 @@ footer button.l{background:none;border:0;color:var(--ink);text-decoration:underl
 
 <header>
 <div class="wrap"><h1 id="nome">O Acervo Relíquias</h1></div>
+<div class="mesa" id="mesa"></div>
 <div class="strip"><div class="wrap"><span>Revistas e publicações para colecionadores</span><nav class="head-actions" aria-label="Links e ações">
 <a class="icon-link instagram-link" id="ig" target="_blank" rel="noopener" aria-label="Abrir Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="solid" cx="17.5" cy="6.5" r="1"/></svg><span>Instagram</span></a>
 <a class="icon-link whatsapp-link" id="wa" target="_blank" rel="noopener" aria-label="Conversar pelo WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2L3 20l1.2-4.9a8.2 8.2 0 1 1 16-3.4Z"/><path d="M8.4 7.9c.2-.4.5-.6.9-.6h.5c.2 0 .4.2.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.6 1 1.4 1.8 2.4 2.3.3.2.5.2.7-.1l.7-.9c.2-.2.4-.3.7-.1l1.8.9c.3.1.4.3.4.6 0 .4-.2 1.2-.8 1.6-.5.4-1.2.6-2 .4-1.2-.3-2.5-.9-3.8-2.1-1.1-1-1.9-2.3-2.2-3.4-.3-1 .1-2 .4-2.8Z"/></svg><span>WhatsApp</span></a>
@@ -256,6 +267,7 @@ async function reservar(ids){
   }catch(e){return {ok:false,message:"Falha de conexão ao solicitar a reserva. Verifique sua internet e tente novamente."}}
 }
 function ld(){try{var s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify({"@context":"https://schema.org","@type":"ItemList",itemListElement:REVISTAS.filter(function(r){return r.st==='disponivel'}).map(function(r,j){return {"@type":"ListItem",position:j+1,item:{"@type":"Product",name:r.t+" "+r.e+" "+r.a,image:r.img,url:location.origin+"/?r="+r.id,offers:{"@type":"Offer",priceCurrency:"BRL",price:r.p,availability:"https://schema.org/InStock",itemCondition:"https://schema.org/UsedCondition"}}}})});document.head.appendChild(s)}catch(e){}}
+function mesa(){var m=$('mesa'),L=REVISTAS.filter(function(r){return r.img&&r.st==='disponivel'}).sort(function(a,b){return (b.rar?2:0)+(b.d?1:0)-(a.rar?2:0)-(a.d?1:0)}).slice(0,5),A=[-9,5,-2,7,-6],Y=[6,-4,0,-6,4];m.className='mesa'+(CFG.desfocar?' blur':'');m.innerHTML=L.map(function(r,j){return '<button class="pc" style="--r:'+A[j]+'deg;--y:'+Y[j]+'px" data-i="'+r.i+'" aria-label="Ver '+esc(r.t)+' '+esc(r.e)+'">'+pic(r.img,'',1)+'</button>'}).join("")}
 function byId(id){return REVISTAS.filter(function(r){return r.id===id})[0]}
 
 /* carrinho */
@@ -272,7 +284,7 @@ function drawCart(){
   $('cl').innerHTML=its.length?its.map(function(r){return '<div class="ci">'+(r.img?pic(r.img,'',1):'')+'<div><b>'+esc(r.t)+' '+esc(r.e)+'</b><br><span class="meta">'+r.a+' · '+money(r.p)+'</span></div><button data-rm="'+r.id+'">Tirar</button></div>'}).join(""):'<p class="empty">Seu carrinho está vazio.</p>';
   $('cs').innerHTML=its.length?'<div class="tot"><span>Subtotal</span><span>'+money(sub)+'</span></div><div class="tot"><span>Frete</span><span>'+(fr==null?'a combinar pelo CEP':fr===0?'grátis':money(fr))+'</span></div>'+(fr==null?'':'<div class="tot g"><span>Total</span><span>'+money(sub+fr)+'</span></div>'):'';
   $('cpix').innerHTML=CFG.pix&&its.length?'Pagamento por Pix. Chave: <b id="pk">'+esc(CFG.pix)+'</b> <button class="chip" id="pkc">Copiar</button>':'';
-  var a=$('csend');a.hidden=!its.length;
+  var a=$('csend');a.hidden=!its.length;$('cpay').hidden=!its.length||fr==null;
   var msg="Olá! Quero comprar:\n"+its.map(function(r){return "- "+r.t+" "+r.e+" ("+r.a+"): "+money(r.p)}).join("\n")+"\nSubtotal: "+money(sub)+"\nFrete: "+(fr==null?"a combinar":fr===0?"grátis":money(fr))+(($('cnome').value)?"\nNome: "+$('cnome').value:"")+(($('ccep').value)?"\nCEP: "+$('ccep').value:"");
   a.href=wa(WHATSAPP)+"?text="+encodeURIComponent(msg);
 }
@@ -295,6 +307,25 @@ $('csend').onclick=async function(e){
   location.href=wa(WHATSAPP)+"?text="+encodeURIComponent(msg);
 };
 $('cpix').onclick=function(e){if(e.target.id==='pkc'){try{navigator.clipboard.writeText(CFG.pix);e.target.textContent='Copiado'}catch(x){}}};
+
+/* pagamento Pix */
+function v(i){return $(i).value.trim()}
+$('ccep').addEventListener('input',function(){var d=this.value.replace(/\D/g,'');if(d.length===8)fetch('https://viacep.com.br/ws/'+d+'/json/').then(function(r){return r.json()}).then(function(j){if(j&&!j.erro){if(!v('crua'))$('crua').value=j.logradouro||'';if(!v('cbairro'))$('cbairro').value=j.bairro||'';$('ccid').value=j.localidade||'';$('cuf').value=j.uf||''}}).catch(function(){})});
+$('cpay').onclick=function(){
+ var m=$('cmsg'),b=this,its=itens(),e={cep:v('ccep').replace(/\D/g,''),rua:v('crua'),numero:v('cnum'),bairro:v('cbairro'),cidade:v('ccid'),uf:v('cuf').toUpperCase()};
+ if(!its.length||!v('cnome')||!/.+@.+\..+/.test(v('cemail'))||v('ctel').replace(/\D/g,'').length<10||e.cep.length!==8||!e.rua||!e.numero||!e.cidade||e.uf.length!==2){m.textContent='Preencha nome, e-mail, telefone e endereço completo.';return}
+ m.textContent='Gerando Pix…';b.disabled=true;
+ fetch('/api/pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ids:its.map(function(r){return r.id}),nome:v('cnome'),email:v('cemail'),telefone:v('ctel'),endereco:e})})
+ .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.erro||'Erro');return j})})
+ .then(showPix).catch(function(x){m.textContent=x.message||'Não foi possível gerar o Pix. Tente o WhatsApp.';b.disabled=false})};
+function showPix(j){
+ $('cform').hidden=true;var p=$('pixv');p.hidden=false;
+ p.innerHTML='<p><b>Pague '+money(j.total)+' com Pix</b></p><img alt="QR Code Pix" width="220" height="220" style="background:#fff;padding:8px;display:block;margin:8px auto" src="data:image/png;base64,'+j.qr64+'"><input id="pcode" readonly value="'+esc(j.qr)+'"><button class="btn" id="pcp">Copiar código Pix</button><p class="hint" id="pst" role="status">Aguardando pagamento… As revistas ficam reservadas por 30 minutos.</p>';
+ $('pcp').onclick=function(){try{navigator.clipboard.writeText(j.qr);this.textContent='Copiado'}catch(x){$('pcode').select()}};
+ var n=0,t=setInterval(function(){if(++n>450){clearInterval(t);return}
+  fetch(SB+'/rest/v1/rpc/status_pedido',{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({p_id:j.pedido})}).then(function(r){return r.json()}).then(function(s){
+   if(s==='pago'){clearInterval(t);CART=[];saveCart();p.innerHTML='<p><b>Pagamento confirmado!</b></p><p>Pedido '+esc(j.pedido.slice(0,8))+'. Vamos postar sua revista e avisar pelo WhatsApp.</p><a class="btn" target="_blank" rel="noopener" href="'+wa(WHATSAPP)+'?text='+encodeURIComponent('Olá! Paguei o pedido '+j.pedido.slice(0,8)+' pelo site.')+'">Falar no WhatsApp</a>';load()}
+   else if(s==='expirado'){clearInterval(t);$('pst').textContent='O prazo do Pix acabou. Feche e tente de novo.'}}).catch(function(){})},4000)}
 
 /* catálogo */
 function drawChips(){
@@ -335,7 +366,7 @@ function load(){reservar([]);
     $('ig').href=$('ig2').href="https://www.instagram.com/"+(CFG.instagram||"oacervo.reliquias")+"/";
     $('end').textContent=CFG.endereco||"";
     if(CFG.envio_info){$('envio').hidden=false;$('etx').textContent=CFG.envio_info}if(CFG.sobre){$('sobre').hidden=false;$('stx').textContent=CFG.sobre;if(CFG.sobre_foto){$('sf').src=CFG.sobre_foto;$('sf').hidden=false}}
-    drawChips();draw();saveCart();ld();
+    drawChips();draw();saveCart();ld();mesa();
     var rid=new URLSearchParams(location.search).get('r'),r=rid&&byId(rid);if(r)openM(r.i,null);
   }).catch(function(){count.textContent="";grid.innerHTML='<p class="empty">Não foi possível carregar o catálogo agora. Tente novamente em instantes.</p>'});
 }
@@ -379,6 +410,7 @@ $('mw').onclick=async function(e){
   location.href=a.href;
 };$('mav').onclick=function(){closeM();$('pt').value='Quero ser avisado se aparecer: '+cur.t+' '+cur.e+(cur.a?' ('+cur.a+')':'');$('procura').scrollIntoView({behavior:'smooth'});$('pn').focus()};
 $('mcp').onclick=function(){var u=location.origin+location.pathname+'?r='+cur.id;try{navigator.clipboard.writeText(u);$('mt2').textContent='Link copiado.'}catch(e){$('mt2').textContent=u}};
+$('mesa').addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(b)openM(+b.dataset.i,b)});
 grid.addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(b)openM(+b.dataset.i,b)});
 thumbs.addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(b){k=+b.dataset.k;show()}});
 $('prev').onclick=function(){go(-1)};$('next').onclick=function(){go(1)};$('mx').onclick=closeM;
